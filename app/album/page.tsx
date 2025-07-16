@@ -27,7 +27,7 @@ const GalleryPage = () => {
           {GALERY_IMAGES.map((image, index) => (
             <li
               key={index}
-              className="overflow-hidden border-transparent border md:border-border flex flex-col h-full bg-white relative group"
+              className="overflow-hidden border-transparent border md:border-border flex flex-col h-full bg-white relative group focus-within:ring-2 focus-within:ring-accent focus-within:ring-offset-2"
             >
               <div className="aspect-[4/3] w-full overflow-hidden relative">
                 <Image
@@ -50,9 +50,6 @@ const GalleryPage = () => {
               </div>
               <div className="p-6 flex-1 flex flex-col justify-end">
                 <h3 className="mb-2">{image.title}</h3>
-                <small className="text-xs uppercase text-text">
-                  {image.category}
-                </small>
               </div>
             </li>
           ))}

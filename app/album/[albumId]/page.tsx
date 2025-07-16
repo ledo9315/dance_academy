@@ -1,13 +1,14 @@
+import LinkComponent from "@/components/ui/link";
 import { GALERY_IMAGES } from "@/data/gallery-images";
 import { ArrowLeft, Eye } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { use } from "react";
 
-const AlbumPage = ({ params }: { params: Promise<{ id: string }> }) => {
-  const { id } = use(params);
+const AlbumPage = ({ params }: { params: Promise<{ albumId: string }> }) => {
+  const { albumId } = use(params);
 
-  const albumId = id
+  const formattedAlbumId = albumId
     .split("-")
     .map((word) => word.charAt(0).toLocaleUpperCase() + word.slice(1))
     .join(" ");
@@ -24,13 +25,13 @@ const AlbumPage = ({ params }: { params: Promise<{ id: string }> }) => {
           <li className="text-gray-400" aria-hidden="true">
             /
           </li>
-          <li aria-current="page">{albumId}</li>
+          <li aria-current="page">{formattedAlbumId}</li>
         </ol>
       </nav>
 
       <header className="relative mb-16">
         <h1 className="text-center text-4xl before:content-[''] before:absolute before:bottom-[-15px] before:left-1/2 before:-translate-x-1/2 before:h-0.5 before:w-12 before:bg-accent ">
-          {albumId}
+          {formattedAlbumId}
         </h1>
       </header>
 
@@ -53,7 +54,7 @@ const AlbumPage = ({ params }: { params: Promise<{ id: string }> }) => {
               />
               <div className="absolute inset-0 bg-accent/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               <Link
-                href={`/album/${id}/${image.id}`}
+                href={`/album/${albumId}/${image.id}`}
                 className="absolute inset-0 flex flex-col items-center justify-center gap-y-1 text-white text-sm font-sans opacity-0 group-hover:opacity-100 transition-opacity z-30 uppercase"
               >
                 <Eye width={25} height={25} />
@@ -62,14 +63,11 @@ const AlbumPage = ({ params }: { params: Promise<{ id: string }> }) => {
             </li>
           ))}
         </ul>
-        <footer className="flex items-center justify-between text-sm text-gray-500 font-sans mt-4">
-          <Link
-            href="/album"
-            className="bg-accent text-white px-4 py-2 flex items-center gap-x-2 hover:bg-accent-dark transition-colors duration-300"
-          >
-            <ArrowLeft width={16} height={16} />
+        <footer className="flex items-center justify-between text-gray-500 font-sans mt-4">
+          <LinkComponent href="/album" variant="outline-button">
+            <ArrowLeft width={16} height={16} className="mr-1" />
             Back to Gallery
-          </Link>
+          </LinkComponent>
           <span aria-live="polite">
             {GALERY_IMAGES.length} images in this album
           </span>

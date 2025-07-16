@@ -1,6 +1,7 @@
 "use client";
 
 import { Hero } from "@/components/Hero";
+import LinkComponent from "@/components/ui/link";
 import { Phone, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -125,13 +126,10 @@ const Page = () => {
           Contact us today to learn more about our programs and visit our
           studio.
         </p>
-        <Link
-          href="/contact"
-          className="text-white bg-accent hover:bg-accent-dark px-6 py-3 flex items-center space-x-2 text-sm font-sans transition-colors duration-300"
-        >
-          <Phone width={20} height={20} />
-          <span className="">Contact Us</span>
-        </Link>
+        <LinkComponent href="/contact" variant="default-button">
+          <Phone width={20} height={20} className="mr-2" />
+          Contact Us
+        </LinkComponent>
       </section>
     </main>
   );

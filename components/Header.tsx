@@ -3,6 +3,7 @@
 import { MobileNav } from "@/components/MobileNav";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 export default function Header() {
@@ -12,6 +13,10 @@ export default function Header() {
     { href: "/album", label: "Gallery" },
     { href: "/contact", label: "Contact" },
   ];
+
+  const path = usePathname();
+
+  console.log(path);
 
   const [isActive, setIsActive] = useState(false);
   const toggleActive = () => setIsActive((prev) => !prev);
@@ -51,7 +56,9 @@ export default function Header() {
           {NAV_LINKS.map((link) => (
             <li key={link.label}>
               <Link
-                className="px-2 transition-colors hover:text-accent"
+                className={`px-2 transition-colors hover:text-accent ${
+                  path === link.href ? "text-accent" : ""
+                }`}
                 href={link.href}
               >
                 {link.label}

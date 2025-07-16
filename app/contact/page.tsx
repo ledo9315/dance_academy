@@ -1,13 +1,15 @@
 "use client";
 
 import { Hero } from "@/components/Hero";
+import { Button } from "@/components/ui/button";
+import LinkComponent from "@/components/ui/link";
 import {
   LoaderCircle,
   MapPin,
   Send,
   SquareArrowOutUpRight,
 } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 const ContactPage = () => {
@@ -15,6 +17,11 @@ const ContactPage = () => {
   const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(
     null
   );
+  const [showIframe, setShowIframe] = useState(false);
+
+  useEffect(() => {
+    setShowIframe(true);
+  }, []);
 
   const {
     register,
@@ -22,14 +29,7 @@ const ContactPage = () => {
     reset,
     formState: { errors },
   } = useForm({
-    mode: "onTouched",
-    defaultValues: {
-      name: "",
-      email: "",
-      phone: "",
-      subject: "",
-      message: "",
-    },
+    mode: "onSubmit",
   });
 
   const onSubmit = async (data: any) => {
@@ -238,27 +238,23 @@ const ContactPage = () => {
 
             {/* Submit Button */}
             <div className="pt-6 border-t-2 border-border flex justify-end">
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full md:w-fit flex justify-center items-center text-sm px-8 py-3 bg-accent text-white hover:bg-accent-dark"
-              >
+              <Button type="submit" disabled={isSubmitting}>
                 {isSubmitting ? (
                   <>
                     <LoaderCircle
                       width={20}
                       height={20}
-                      className="mr-2 animate-spin"
+                      className="animate-spin"
                     />
                     Sending...
                   </>
                 ) : (
                   <>
-                    <Send width={20} height={20} className="mr-2" />
+                    <Send width={20} height={20} />
                     Send Message
                   </>
                 )}
-              </button>
+              </Button>
             </div>
           </form>
         </div>
@@ -271,7 +267,7 @@ const ContactPage = () => {
 
           <div className="relative">
             {/* Fallback for no JavaScript */}
-            <div className="bg-gray-50 p-8 text-center">
+            <div className="bg-gray-50 p-8 text-center flex flex-col items-center">
               <div className="mb-6">
                 <div className="flex flex-col items-center space-y-2">
                   <MapPin width={40} height={40} className="text-accent" />
@@ -286,11 +282,9 @@ const ContactPage = () => {
                 </div>
               </div>
 
-              <a
+              <LinkComponent
                 href="https://www.google.com/maps?q=12840+Tamiami+Trail+N+Suite+300+Naples+FL+34110"
-                className="inline-flex items-center px-6 py-3 bg-accent text-white text-sm font-sans hover:bg-accent-dark transition-colors"
-                target="_blank"
-                rel="noopener noreferrer"
+                variant="default-button"
               >
                 <SquareArrowOutUpRight
                   width={20}
@@ -298,18 +292,20 @@ const ContactPage = () => {
                   className="mr-2"
                 />
                 Open in Google Maps
-              </a>
+              </LinkComponent>
             </div>
 
             {/* Google Maps iframe */}
-            <iframe
-              title="Angela's Dance Academy Location"
-              loading="lazy"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3577.1810548002613!2d-81.80198696955127!3d26.288229965617816!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88db1937da84011f%3A0xb520ca78872c755c!2s12840%20Tamiami%20Trail%20N%20Suite%20300%2C%20Naples%2C%20FL%2034110%2C%20USA!5e0!3m2!1sen!2s!4v1683563335525!5m2!1sen!2s"
-              className="w-full h-96 border-0 mt-8"
-              allowFullScreen
-              referrerPolicy="no-referrer-when-downgrade"
-            ></iframe>
+            {showIframe && (
+              <iframe
+                title="Angela's Dance Academy Location"
+                loading="lazy"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3577.1810548002613!2d-81.80198696955127!3d26.288229965617816!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88db1937da84011f%3A0xb520ca78872c755c!2s12840%20Tamiami%20Trail%20N%20Suite%20300%2C%20Naples%2C%20FL%2034110%2C%20USA!5e0!3m2!1sen!2s!4v1683563335525!5m2!1sen!2s"
+                className="w-full h-96 border-0 mt-8"
+                allowFullScreen
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
+            )}
           </div>
         </div>
       </div>

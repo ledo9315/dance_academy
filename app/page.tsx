@@ -1,6 +1,16 @@
+"use client";
+
 import Image from "next/image";
+import React, { useEffect, useState } from "react";
+import { Play, ExternalLink } from "lucide-react";
 
 const Page = () => {
+  const [showVideo, setShowVideo] = useState(false);
+
+  useEffect(() => {
+    setShowVideo(true);
+  }, []);
+
   return (
     <main className="flex-1 flex flex-col items-center justify-center gap-y-6 pt-10">
       <h1 className="sr-only">
@@ -45,20 +55,54 @@ const Page = () => {
           </p>
         </article>
       </section>
-      <section className="mb-32 max-w-[800px]">
+
+      <section className="mb-16 w-full max-w-[800px]">
         <h2 className="text-2xl font-light text-center mb-14">
-          See Our Academy in Actions
+          See Our Academy in Action
         </h2>
-        <iframe
-          title="Angela's Dance Academy Video"
-          width="800"
-          height="450"
-          loading="lazy"
-          src="https://www.youtube.com/embed/V6akGrZTiDU"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen
-          className="w-full aspect-video"
-        ></iframe>
+
+        <div className="relative mb-16">
+          {/* Fallback for no JavaScript */}
+          <div className="bg-gray-50 p-8 text-center aspect-video flex flex-col items-center justify-center">
+            <div className="mb-6">
+              <div className="flex flex-col items-center space-y-4">
+                <Play width={60} height={60} className="text-accent" />
+                <h3 className="text-xl text-gray-800 mb-4">
+                  Watch Our Academy Video
+                </h3>
+              </div>
+              <div className="text-text font-sans mb-6">
+                <p className="text-gray-600">
+                  Experience the energy and passion of our dance academy
+                </p>
+              </div>
+            </div>
+
+            <a
+              href="https://www.youtube.com/watch?v=V6akGrZTiDU"
+              className="inline-flex items-center px-6 py-3 bg-accent text-white text-sm font-sans hover:bg-accent-dark transition-colors active:translate-y-0.5"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <ExternalLink width={20} height={20} className="mr-2" />
+              Watch on YouTube
+            </a>
+          </div>
+
+          {/* YouTube Video - only shown when JavaScript is enabled */}
+          {showVideo && (
+            <iframe
+              title="Angela's Dance Academy Video"
+              width="800"
+              height="450"
+              loading="lazy"
+              src="https://www.youtube.com/embed/V6akGrZTiDU"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              className="w-full aspect-video absolute top-0 left-0"
+            ></iframe>
+          )}
+        </div>
       </section>
     </main>
   );
