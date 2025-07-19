@@ -3,6 +3,9 @@ import AdminNav from "@/components/admin/AdminNav";
 import { Album } from "@/types";
 import Image from "next/image";
 
+// Force dynamic rendering to avoid build-time fetch issues
+export const dynamic = "force-dynamic";
+
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
 export default async function Dashboard() {

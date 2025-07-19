@@ -3,6 +3,9 @@ import { ArrowLeft, Eye } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
+// Force dynamic rendering to avoid build-time fetch issues
+export const dynamic = "force-dynamic";
+
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
 const AlbumPage = async ({
