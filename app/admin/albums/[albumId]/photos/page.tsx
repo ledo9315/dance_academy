@@ -1,3 +1,5 @@
+"use client";
+
 import DeletePhotoButton from "@/components/admin/DeletePhotoButton";
 import LinkComponent from "@/components/ui/link";
 import {
@@ -10,21 +12,58 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState, use } from "react";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-
-export default async function Photos({
+export default function Photos({
   params,
 }: {
   params: Promise<{ albumId: string }>;
 }) {
-  const { albumId } = await params;
+  const { albumId } = use(params);
+  const [photos, setPhotos] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const res = await fetch(`${BASE_URL}/api/albums/${albumId}/photos`);
-  if (!res.ok) {
-    return <div>Error loading photos</div>;
+  useEffect(() => {
+    const fetchPhotos = async () => {
+      try {
+        const res = await fetch(`/api/albums/${albumId}/photos`);
+        if (!res.ok) {
+          setError("Error loading photos");
+          return;
+        }
+        const { photos: photosData } = await res.json();
+        setPhotos(photosData);
+      } catch (error) {
+        console.error("Error fetching photos:", error);
+        setError("Failed to load photos");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchPhotos();
+  }, [albumId]);
+
+  if (isLoading) {
+    return (
+      <main className="container px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-center items-center py-12">
+          <p className="text-text">Loading photos...</p>
+        </div>
+      </main>
+    );
   }
-  const { photos } = await res.json();
+
+  if (error) {
+    return (
+      <main className="container px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-center items-center py-12">
+          <p className="text-text">{error}</p>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="container px-4 sm:px-6 lg:px-8">

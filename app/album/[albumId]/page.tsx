@@ -4,7 +4,7 @@ import LinkComponent from "@/components/ui/link";
 import { ArrowLeft, Eye } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, use } from "react";
 
 interface Album {
   id: number;
@@ -17,7 +17,8 @@ interface Photo {
   filename: string;
 }
 
-const AlbumPage = ({ params }: { params: { albumId: string } }) => {
+const AlbumPage = ({ params }: { params: Promise<{ albumId: string }> }) => {
+  const { albumId } = use(params);
   const [album, setAlbum] = useState<Album | null>(null);
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -27,7 +28,7 @@ const AlbumPage = ({ params }: { params: { albumId: string } }) => {
     const fetchData = async () => {
       try {
         // Fetch album details
-        const albumRes = await fetch(`/api/albums/${params.albumId}`);
+        const albumRes = await fetch(`/api/albums/${albumId}`);
         if (!albumRes.ok) {
           setError("Album not found");
           return;
@@ -35,7 +36,7 @@ const AlbumPage = ({ params }: { params: { albumId: string } }) => {
         const { album: albumData } = await albumRes.json();
 
         // Fetch album photos
-        const photosRes = await fetch(`/api/albums/${params.albumId}/photos`);
+        const photosRes = await fetch(`/api/albums/${albumId}/photos`);
         if (!photosRes.ok) {
           setError("Error loading photos");
           return;
@@ -53,7 +54,7 @@ const AlbumPage = ({ params }: { params: { albumId: string } }) => {
     };
 
     fetchData();
-  }, [params.albumId]);
+  }, [albumId]);
 
   if (isLoading) {
     return (
@@ -121,7 +122,7 @@ const AlbumPage = ({ params }: { params: { albumId: string } }) => {
               />
               <div className="absolute inset-0 bg-accent/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               <Link
-                href={`/album/${params.albumId}/${image.id}`}
+                href={`/album/${albumId}/${image.id}`}
                 className="absolute inset-0 flex flex-col items-center justify-center gap-y-1 text-white text-sm font-sans opacity-0 group-hover:opacity-100 transition-opacity z-30 uppercase"
               >
                 <Eye width={25} height={25} />

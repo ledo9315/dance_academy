@@ -1,39 +1,81 @@
-import { GALERY_IMAGES } from "@/data/gallery-images";
-import Image from "next/image";
-import { use } from "react";
-import Link from "next/link";
+"use client";
 
-const ImagePage = async ({
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState, use } from "react";
+
+interface Album {
+  id: number;
+  title: string;
+}
+
+interface Photo {
+  id: number;
+  filename: string;
+  path: string;
+}
+
+const ImagePage = ({
   params,
 }: {
   params: Promise<{ albumId: string; imageId: string }>;
 }) => {
-  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  const { albumId, imageId } = use(params);
+  const [album, setAlbum] = useState<Album | null>(null);
+  const [photo, setPhoto] = useState<Photo | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const { albumId, imageId } = await params;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetch album details
+        const resAlbum = await fetch(`/api/albums/${albumId}`);
+        if (!resAlbum.ok) {
+          setError("Album not found");
+          return;
+        }
+        const albumData = await resAlbum.json();
 
-  const resAlbum = await fetch(`${BASE_URL}/api/albums/${albumId}`);
-  const albumData = await resAlbum.json();
+        // Fetch photo details
+        const res = await fetch(`/api/albums/${albumId}/photos/${imageId}`);
+        if (!res.ok) {
+          setError("Error loading image");
+          return;
+        }
+        const data = await res.json();
 
-  console.log(albumData.album.title);
+        setAlbum(albumData.album);
+        setPhoto(data.photo);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setError("Failed to load data");
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-  if (!albumData) {
-    return <p>Album not found</p>;
+    fetchData();
+  }, [albumId, imageId]);
+
+  if (isLoading) {
+    return (
+      <main className="container mx-auto py-8">
+        <div className="flex justify-center items-center py-12">
+          <p className="text-text">Loading image...</p>
+        </div>
+      </main>
+    );
   }
 
-  const res = await fetch(
-    `${BASE_URL}/api/albums/${albumId}/photos/${imageId}`
-  );
-
-  if (!res.ok) {
-    return <p>Error loading image</p>;
-  }
-
-  const data = await res.json();
-  const { photo } = data;
-
-  if (!photo) {
-    return <p>Image not found</p>;
+  if (error || !album || !photo) {
+    return (
+      <main className="container mx-auto py-8">
+        <div className="flex justify-center items-center py-12">
+          <p className="text-text">{error || "Image not found"}</p>
+        </div>
+      </main>
+    );
   }
 
   return (
@@ -49,7 +91,7 @@ const ImagePage = async ({
             /
           </li>
           <li className="text-accent" aria-current="page">
-            <Link href={`/album/${albumId}`}>{albumData.album.title}</Link>
+            <Link href={`/album/${albumId}`}>{album.title}</Link>
           </li>
           <li className="text-gray-400" aria-hidden="true">
             /

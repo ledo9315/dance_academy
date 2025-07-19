@@ -17,7 +17,6 @@ const InterceptedImageModal = ({
 }: {
   params: Promise<{ albumId: string; imageId: string }>;
 }) => {
-  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
   const { albumId, imageId } = use(params);
   const router = useRouter();
   const [photo, setPhoto] = useState<any>(null);
@@ -29,14 +28,12 @@ const InterceptedImageModal = ({
       try {
         // Fetch photo details
         const photoRes = await fetch(
-          `${BASE_URL}/api/albums/${albumId}/photos/${imageId}`
+          `/api/albums/${albumId}/photos/${imageId}`
         );
         const photoData = await photoRes.json();
 
         // Fetch all photos for navigation
-        const photosRes = await fetch(
-          `${BASE_URL}/api/albums/${albumId}/photos`
-        );
+        const photosRes = await fetch(`/api/albums/${albumId}/photos`);
         const photosData = await photosRes.json();
 
         setPhoto(photoData.photo);
@@ -49,7 +46,7 @@ const InterceptedImageModal = ({
     };
 
     fetchData();
-  }, [albumId, imageId, BASE_URL]);
+  }, [albumId, imageId]);
 
   const handleOpenChange = (open: boolean) => {
     if (!open) {
