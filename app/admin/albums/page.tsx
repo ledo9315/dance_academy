@@ -1,22 +1,51 @@
+"use client";
+
 import { AlbumActions } from "@/components/admin/AlbumActions";
 import AdminNav from "@/components/admin/AdminNav";
 import { Album } from "@/types";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
-// Force dynamic rendering to avoid build-time fetch issues
-export const dynamic = "force-dynamic";
+export default function Dashboard() {
+  const [albums, setAlbums] = useState<Album[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  useEffect(() => {
+    const fetchAlbums = async () => {
+      try {
+        const res = await fetch("/api/albums");
+        const { allAlbums } = await res.json();
 
-export default async function Dashboard() {
-  const res = await fetch(`${BASE_URL}/api/albums`);
-  const { allAlbums } = await res.json();
+        const albumsData: Album[] = allAlbums.map((album: any) => ({
+          id: album.id,
+          title: album.title,
+          coverImage: album.coverImage,
+        }));
 
-  const albums: Album[] = allAlbums.map((album: any) => ({
-    id: album.id,
-    title: album.title,
-    coverImage: `${BASE_URL}${album.coverImage}`,
-  }));
+        setAlbums(albumsData);
+      } catch (error) {
+        console.error("Error fetching albums:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchAlbums();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <main className="container px-4 sm:px-6 lg:px-8">
+        <header className="py-6 sm:py-8 md:py-12 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-0 px-4 sm:px-0">
+          <h1 className="text-2xl sm:text-3xl">Album Management</h1>
+          <AdminNav />
+        </header>
+        <div className="flex justify-center items-center py-12">
+          <p className="text-text">Loading albums...</p>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="container px-4 sm:px-6 lg:px-8">

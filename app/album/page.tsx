@@ -1,23 +1,53 @@
+"use client";
+
 import { Hero } from "@/components/Hero";
 import { Album } from "@/types";
 import { Eye } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
-// Force dynamic rendering to avoid build-time fetch issues
-export const dynamic = "force-dynamic";
+const GalleryPage = () => {
+  const [albums, setAlbums] = useState<Album[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  useEffect(() => {
+    const fetchAlbums = async () => {
+      try {
+        const res = await fetch("/api/albums");
+        const { allAlbums } = await res.json();
 
-const GalleryPage = async () => {
-  const res = await fetch(`${BASE_URL}/api/albums`);
-  const { allAlbums } = await res.json();
+        const albumsData: Album[] = allAlbums.map((album: any) => ({
+          id: album.id,
+          title: album.title,
+          coverImage: album.coverImage,
+        }));
 
-  const albums: Album[] = allAlbums.map((album: any) => ({
-    id: album.id,
-    title: album.title,
-    coverImage: `${BASE_URL}${album.coverImage}`,
-  }));
+        setAlbums(albumsData);
+      } catch (error) {
+        console.error("Error fetching albums:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchAlbums();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <main className="container">
+        <Hero
+          imgSrc="/gallery-background.jpg"
+          title="Gallery"
+          className="mb-24 px-4 md:px-0"
+        />
+        <div className="flex justify-center items-center py-12">
+          <p className="text-text">Loading albums...</p>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="container">

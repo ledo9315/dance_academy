@@ -11,6 +11,19 @@ export async function GET() {
     return NextResponse.json(schedule);
   } catch (error) {
     console.error("Error fetching schedule:", error);
+
+    // Check if it's a database connection error
+    if (error instanceof Error && error.message.includes("DATABASE_URL")) {
+      return NextResponse.json(
+        {
+          error: "Database connection not configured",
+          message: "Please set DATABASE_URL environment variable",
+          details: error.message,
+        },
+        { status: 503 }
+      );
+    }
+
     return NextResponse.json(
       { error: "Failed to fetch schedule" },
       { status: 500 }

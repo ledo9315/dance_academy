@@ -1,33 +1,79 @@
+"use client";
+
 import LinkComponent from "@/components/ui/link";
 import { ArrowLeft, Eye } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
-// Force dynamic rendering to avoid build-time fetch issues
-export const dynamic = "force-dynamic";
+interface Album {
+  id: number;
+  title: string;
+}
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+interface Photo {
+  id: number;
+  path: string;
+  filename: string;
+}
 
-const AlbumPage = async ({
-  params,
-}: {
-  params: Promise<{ albumId: string }>;
-}) => {
-  const { albumId } = await params;
+const AlbumPage = ({ params }: { params: { albumId: string } }) => {
+  const [album, setAlbum] = useState<Album | null>(null);
+  const [photos, setPhotos] = useState<Photo[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Fetch album details
-  const albumRes = await fetch(`${BASE_URL}/api/albums/${albumId}`);
-  if (!albumRes.ok) {
-    return <div>Album not found</div>;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetch album details
+        const albumRes = await fetch(`/api/albums/${params.albumId}`);
+        if (!albumRes.ok) {
+          setError("Album not found");
+          return;
+        }
+        const { album: albumData } = await albumRes.json();
+
+        // Fetch album photos
+        const photosRes = await fetch(`/api/albums/${params.albumId}/photos`);
+        if (!photosRes.ok) {
+          setError("Error loading photos");
+          return;
+        }
+        const { photos: photosData } = await photosRes.json();
+
+        setAlbum(albumData);
+        setPhotos(photosData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setError("Failed to load album data");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [params.albumId]);
+
+  if (isLoading) {
+    return (
+      <main className="container">
+        <div className="flex justify-center items-center py-12">
+          <p className="text-text">Loading album...</p>
+        </div>
+      </main>
+    );
   }
-  const { album } = await albumRes.json();
 
-  // Fetch album photos
-  const photosRes = await fetch(`${BASE_URL}/api/albums/${albumId}/photos`);
-  if (!photosRes.ok) {
-    return <div>Error loading photos</div>;
+  if (error || !album) {
+    return (
+      <main className="container">
+        <div className="flex justify-center items-center py-12">
+          <p className="text-text">{error || "Album not found"}</p>
+        </div>
+      </main>
+    );
   }
-  const { photos } = await photosRes.json();
 
   return (
     <main className="container">
@@ -75,7 +121,7 @@ const AlbumPage = async ({
               />
               <div className="absolute inset-0 bg-accent/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               <Link
-                href={`/album/${albumId}/${image.id}`}
+                href={`/album/${params.albumId}/${image.id}`}
                 className="absolute inset-0 flex flex-col items-center justify-center gap-y-1 text-white text-sm font-sans opacity-0 group-hover:opacity-100 transition-opacity z-30 uppercase"
               >
                 <Eye width={25} height={25} />
