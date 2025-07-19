@@ -1,5 +1,5 @@
+import DeletePhotoButton from "@/components/admin/DeletePhotoButton";
 import LinkComponent from "@/components/ui/link";
-import { GALERY_IMAGES } from "@/data/gallery-images";
 import {
   ArrowLeft,
   Upload,
@@ -11,6 +11,8 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+
 export default async function Photos({
   params,
 }: {
@@ -18,41 +20,23 @@ export default async function Photos({
 }) {
   const { albumId } = await params;
 
-  // Find album based on ID
-  const album = GALERY_IMAGES.find((img) => img.id.toString() === albumId);
-
-  if (!album) {
-    return (
-      <main className="container">
-        <div className="py-12 text-center">
-          <h1 className="text-2xl mb-4">Album not found</h1>
-          <LinkComponent variant="default-button" href="/admin/albums">
-            Back to Albums
-          </LinkComponent>
-        </div>
-      </main>
-    );
+  const res = await fetch(`${BASE_URL}/api/albums/${albumId}/photos`);
+  if (!res.ok) {
+    return <div>Error loading photos</div>;
   }
-
-  // Simulate photos for the album (in a real app these would come from a database)
-  const albumPhotos = [
-    { id: 1, src: "/photos/1.jpg", alt: "Photo 1", filename: "photo1.jpg" },
-    { id: 2, src: "/photos/2.jpg", alt: "Photo 2", filename: "photo2.jpg" },
-    { id: 3, src: "/photos/3.jpg", alt: "Photo 3", filename: "photo3.jpg" },
-    { id: 4, src: "/photos/4.jpg", alt: "Photo 4", filename: "photo4.jpg" },
-    { id: 5, src: "/photos/5.jpg", alt: "Photo 5", filename: "photo5.jpg" },
-    { id: 6, src: "/photos/6.jpg", alt: "Photo 6", filename: "photo6.jpg" },
-  ];
+  const { photos } = await res.json();
 
   return (
-    <main className="container">
-      <header>
-        <h1 className="text-2xl md:text-3xl mb-8">{album.title}</h1>
-        <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-12">
+    <main className="container px-4 sm:px-6 lg:px-8">
+      <header className="px-4 sm:px-0">
+        <h1 className="text-xl sm:text-2xl md:text-3xl mb-6 sm:mb-8">
+          Album Photos
+        </h1>
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-8 sm:mb-12">
           <div className="flex items-center gap-4">
             <Link
               href="/admin/albums"
-              className="flex items-center gap-2 text-accent hover:text-accent-dark transition-colors duration-300 font-sans"
+              className="flex items-center gap-2 text-accent hover:text-accent-dark transition-colors duration-300 font-sans text-sm sm:text-base"
             >
               <ArrowLeft className="w-4 h-4" />
               <span className="hidden sm:inline">Back to Albums</span>
@@ -63,75 +47,71 @@ export default async function Photos({
             <LinkComponent
               variant="default-button"
               href={`/admin/albums/${albumId}/photos/upload`}
+              className="w-full sm:w-auto"
             >
               <Upload className="w-4 h-4 mr-1" />
               <span className="hidden sm:inline">Upload Pictures</span>
               <span className="sm:hidden">Upload</span>
             </LinkComponent>
-            <LinkComponent
-              variant="outline-button"
-              href={`/admin/albums/${albumId}/photos/delete-all`}
-            >
-              <Trash2 className="w-4 h-4 mr-1" />
-              <span className="hidden sm:inline">Delete All Pictures</span>
-              <span className="sm:hidden">Delete All</span>
-            </LinkComponent>
           </nav>
         </div>
       </header>
 
-      <section className="flex flex-col gap-y-4 border-2 border-border mb-30 pb-20">
-        <header className="px-4 md:px-8 py-4 md:py-6 bg-gray-100 border-b-2 border-border">
+      <section className="flex flex-col gap-y-4 md:border-2 md:border-border mb-16 sm:mb-30 pb-12 sm:pb-20 px-4 sm:px-0">
+        <header className="px-3 sm:px-4 md:px-8 py-3 sm:py-4 md:py-6 bg-gray-100 border-b-2 border-border">
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-            <h2 className="text-lg md:text-xl">
-              All Photos ({albumPhotos.length})
+            <h2 className="text-base sm:text-lg md:text-xl">
+              All Photos ({photos.length})
             </h2>
           </div>
         </header>
 
-        <div className="p-4 md:p-8">
-          {albumPhotos.length === 0 ? (
-            <div className="text-center py-8 md:py-12">
-              <ImageIcon className="w-12 h-12 md:w-16 md:h-16 mx-auto text-muted-foreground mb-4" />
-              <h3 className="text-base md:text-lg mb-2">No photos available</h3>
-              <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6">
+        <div className="p-3 sm:p-4 md:p-8">
+          {photos.length === 0 ? (
+            <div className="text-center py-6 sm:py-8 md:py-12">
+              <ImageIcon className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 mx-auto text-muted-foreground mb-3 sm:mb-4" />
+              <h3 className="text-sm sm:text-base md:text-lg mb-2">
+                No photos available
+              </h3>
+              <p className="text-xs sm:text-sm md:text-base text-muted-foreground mb-3 sm:mb-4 md:mb-6">
                 Add the first photos to this album.
               </p>
               <LinkComponent
                 variant="default-button"
                 href={`/admin/albums/${albumId}/photos/upload`}
+                className="w-full sm:w-auto"
               >
                 <Plus className="w-4 h-4" />
                 Upload First Photos
               </LinkComponent>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
-              {albumPhotos.map((photo) => (
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
+              {photos.map((photo: any) => (
                 <article
                   key={photo.id}
                   className="group relative border-2 border-border"
                 >
                   <div className="relative">
-                    <Image
-                      className="w-full h-24 sm:h-28 md:h-32 object-cover"
-                      src={photo.src}
-                      alt={photo.alt}
-                      width={200}
-                      height={128}
-                    />
+                    {photo.path ? (
+                      <Image
+                        className="w-full h-20 sm:h-24 md:h-28 lg:h-32 object-cover"
+                        src={photo.path}
+                        alt={photo.originalName || photo.filename || "Photo"}
+                        width={200}
+                        height={128}
+                      />
+                    ) : (
+                      <div className="w-full h-20 sm:h-24 md:h-28 lg:h-32 bg-gray-200 flex items-center justify-center">
+                        <ImageIcon className="w-6 h-6 sm:w-8 sm:h-8 text-gray-400" />
+                      </div>
+                    )}
 
                     {/* Delete Button Overlay */}
-                    <Link
-                      href={`/admin/albums/${albumId}/photos/${photo.id}/delete`}
-                      className="absolute top-1 right-1 md:top-2 md:right-2 w-5 h-5 md:w-6 md:h-6 bg-red-600 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-red-700"
-                      title="Delete photo"
-                    >
-                      <X className="w-2.5 h-2.5 md:w-3 md:h-3" />
-                    </Link>
+                    <DeletePhotoButton photoId={photo.id} albumId={albumId} />
                   </div>
 
-                  <div className="p-2 md:p-2">
+                  <div className="p-1 sm:p-2">
                     <p
                       className="text-xs text-muted-foreground truncate"
                       title={photo.filename}

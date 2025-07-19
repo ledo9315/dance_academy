@@ -3,20 +3,36 @@ import Image from "next/image";
 import { use } from "react";
 import Link from "next/link";
 
-const ImagePage = ({
+const ImagePage = async ({
   params,
 }: {
   params: Promise<{ albumId: string; imageId: string }>;
 }) => {
-  const { albumId, imageId } = use(params);
-  const image = GALERY_IMAGES.find((img) => img.id === Number(imageId));
+  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
-  const formattedAlbumId = albumId
-    .split("-")
-    .map((word) => word.charAt(0).toLocaleUpperCase() + word.slice(1))
-    .join(" ");
+  const { albumId, imageId } = await params;
 
-  if (!image) {
+  const resAlbum = await fetch(`${BASE_URL}/api/albums/${albumId}`);
+  const albumData = await resAlbum.json();
+
+  console.log(albumData.album.title);
+
+  if (!albumData) {
+    return <p>Album not found</p>;
+  }
+
+  const res = await fetch(
+    `${BASE_URL}/api/albums/${albumId}/photos/${imageId}`
+  );
+
+  if (!res.ok) {
+    return <p>Error loading image</p>;
+  }
+
+  const data = await res.json();
+  const { photo } = data;
+
+  if (!photo) {
     return <p>Image not found</p>;
   }
 
@@ -33,21 +49,21 @@ const ImagePage = ({
             /
           </li>
           <li className="text-accent" aria-current="page">
-            <Link href={`/album/${albumId}`}>{formattedAlbumId}</Link>
+            <Link href={`/album/${albumId}`}>{albumData.album.title}</Link>
           </li>
           <li className="text-gray-400" aria-hidden="true">
             /
           </li>
-          <li aria-current="page">{image.title}</li>
+          <li aria-current="page">{photo.filename}</li>
         </ol>
       </nav>
 
       <div className="max-w-4xl mx-auto mb-20">
-        <h1 className="text-2xl font-bold mb-4">{image.title}</h1>
+        <h1 className="text-2xl font-bold mb-4">{photo.filename}</h1>
         <div className="relative">
           <Image
-            src={image.src}
-            alt={image.alt}
+            src={photo.path}
+            alt={photo.filename}
             width={1200}
             height={800}
             className="w-full h-auto"

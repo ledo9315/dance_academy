@@ -72,12 +72,12 @@ const Page = () => {
 
   return (
     <main className="container">
-      <Hero className="mb-24" title="Classes" imgSrc="/17.jpg" />
-      <section className="max-w-3xl mx-auto mb-24">
-        <h2 className="text-center text-3xl mb-6">
+      <Hero className="mb-24 px-4 md:px-0" title="Classes" imgSrc="/17.jpg" />
+      <section className="max-w-3xl mx-auto mb-16 sm:mb-24 px-4 sm:px-0">
+        <h2 className="text-center text-2xl sm:text-3xl mb-4 sm:mb-6">
           Dance Programs for Every Age
         </h2>
-        <p className="text-center text-text text-md font-sans">
+        <p className="text-center text-text text-sm sm:text-base font-sans">
           From our youngest dancers to advanced competitors, Angela's Dance
           Academy offers comprehensive programs designed to nurture talent,
           build confidence, and foster a lifelong love of dance.
@@ -85,7 +85,7 @@ const Page = () => {
       </section>
       <section className="border-b border-border">
         <h2 className="sr-only">Dance Programs for Every Age</h2>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-24">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 mb-16 sm:mb-24 px-4 sm:px-0">
           {ageCards.map((card, index) => (
             <article key={index}>
               <div className="border-2 border-border">
@@ -94,16 +94,18 @@ const Page = () => {
                   alt="Dance Programs"
                   width={1000}
                   height={400}
-                  className="w-full h-100 object-cover"
+                  className="w-full h-64 sm:h-80 lg:h-100 object-cover"
                 />
-                <div className="flex flex-col p-12 pb-16">
+                <div className="flex flex-col p-6 sm:p-8 lg:p-12 pb-12 sm:pb-16">
                   <div className="bg-accent/10 border-2 border-accent w-fit py-1 px-2 mb-6">
                     <span className="text-accent text-xs whitespace-nowrap font-sans">
                       {card.ageRange}
                     </span>
                   </div>
-                  <h2 className="text-xl mb-6">{card.title}</h2>
-                  <p className="text-text text-sm font-sans mb-7">
+                  <h2 className="text-lg sm:text-xl mb-4 sm:mb-6">
+                    {card.title}
+                  </h2>
+                  <p className="text-text text-xs sm:text-sm font-sans mb-6 sm:mb-7">
                     {card.description}
                   </p>
                   <ul className="flex flex-col gap-y-4 text-text text-sm font-sans">
@@ -120,9 +122,9 @@ const Page = () => {
           ))}
         </div>
       </section>
-      <section className="pt-16 max-w-3xl mx-auto mb-32 text-center flex flex-col items-center">
-        <h3 className="text-2xl mb-4">Ready to Start Dancing?</h3>
-        <p className="text-text font-sans mb-6">
+      <section className="pt-12 sm:pt-16 max-w-3xl mx-auto mb-24 sm:mb-32 text-center flex flex-col items-center px-4 sm:px-0">
+        <h3 className="text-xl sm:text-2xl mb-4">Ready to Start Dancing?</h3>
+        <p className="text-text font-sans mb-6 text-sm sm:text-base">
           Contact us today to learn more about our programs and visit our
           studio.
         </p>

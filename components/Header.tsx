@@ -11,18 +11,17 @@ export default function Header() {
     { href: "/", label: "About" },
     { href: "/classes", label: "Classes" },
     { href: "/album", label: "Gallery" },
+    { href: "/schedule", label: "Schedule" },
     { href: "/contact", label: "Contact" },
   ];
 
   const path = usePathname();
 
-  console.log(path);
-
   const [isActive, setIsActive] = useState(false);
   const toggleActive = () => setIsActive((prev) => !prev);
 
   return (
-    <header className="flex flex-col gap-y-6 items-center pt-0 xl:pt-10 px-10 relative mb-12">
+    <header className="flex flex-col gap-y-4 sm:gap-y-6 items-center pt-0 xl:pt-10 px-4 sm:px-6 lg:px-10 relative mb-8 sm:mb-12">
       {/* Mobile nav */}
       <div className="md:hidden w-full flex justify-center py-4">
         <button
@@ -40,19 +39,27 @@ export default function Header() {
       />
 
       {/* Logo */}
-      <Image src="/logo.jpg" alt="Logo" className="" width={470} height={200} />
+      <Image
+        src="/logo.jpg"
+        alt="Logo"
+        className="w-full max-w-[300px] sm:max-w-[400px] lg:max-w-[470px] h-auto"
+        width={470}
+        height={200}
+      />
 
       {/* Adresse */}
-      <address className="flex flex-col md:flex-row justify-between w-full pt-8 uppercase not-italic tracking-[1.4px] text-black/50 text-sm">
-        <p className="text-center">12840 Tamiami Trail North Suite 300</p>
-        <p className="md:flex-1 text-center">Naples, FL, 34110</p>
+      <address className="flex flex-col md:flex-row justify-between w-full pt-6 sm:pt-8 uppercase not-italic tracking-[1.4px] text-black/50 text-xs sm:text-sm px-4 sm:px-0">
+        <p className="text-center mb-2 md:mb-0">
+          12840 Tamiami Trail North Suite 300
+        </p>
+        <p className="md:flex-1 text-center mb-2 md:mb-0">Naples, FL, 34110</p>
         <p className="text-center">239.215.2888</p>
       </address>
 
       {/* Desktop nav */}
-      <nav className="hidden md:flex justify-between items-center w-full pt-6">
+      <nav className="hidden md:flex justify-between items-center w-full pt-4 sm:pt-6">
         <div className="h-0.5 bg-accent flex-1"></div>
-        <ul className="flex gap-x-8 px-6 text-black/50 uppercase">
+        <ul className="flex gap-x-4 lg:gap-x-8 px-4 lg:px-6 text-black/50 uppercase text-sm lg:text-base">
           {NAV_LINKS.map((link) => (
             <li key={link.label}>
               <Link

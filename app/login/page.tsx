@@ -1,5 +1,5 @@
 "use client";
-
+import { authClient } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import LinkComponent from "@/components/ui/link";
 import { ArrowLeft, Circle, LogIn } from "lucide-react";
@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 
 export default function LoginPage() {
   interface LoginForm {
-    name: string;
+    email: string;
     password: string;
   }
 
@@ -20,13 +20,31 @@ export default function LoginPage() {
     mode: "onSubmit",
   });
 
-  const onSubmit = (data: LoginForm) => {
-    console.log(data);
+  const onSubmit = async (formData: LoginForm) => {
+    const { data, error } = await authClient.signIn.email(
+      {
+        email: formData.email,
+        password: formData.password,
+        callbackURL: "/admin/albums",
+      },
+      {
+        onRequest: (ctx) => {
+          console.log("Requesting...");
+        },
+        onSuccess: (ctx) => {
+          console.log("Success...");
+        },
+        onError: (ctx) => {
+          console.log("Error...", error);
+          alert(ctx.error.message);
+        },
+      }
+    );
   };
 
   return (
     <main
-      className="flex flex-col items-center justify-center border-2 border-border p-16  w-full max-w-lg mx-auto m-24"
+      className="flex flex-col items-center justify-center md:border-2 md:border-border p-16 px-4 py-0 md:p-16  w-full max-w-lg mx-auto m-24"
       role="main"
       aria-labelledby="login-title"
     >
@@ -46,27 +64,31 @@ export default function LoginPage() {
       >
         {/* Name */}
         <div className="mb-6">
-          <label htmlFor="name" className="block mb-2">
-            Username <span className="text-accent">*</span>
+          <label htmlFor="email" className="block mb-2">
+            Email <span className="text-accent">*</span>
           </label>
           <input
-            type="text"
-            id="name"
-            {...register("name", {
-              required: "Name is required",
+            type="email"
+            id="email"
+            {...register("email", {
+              required: "Email is required",
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "Invalid email address",
+              },
             })}
             className="w-full px-4 py-3 border-2 border-border transition-colors"
-            placeholder="Enter your username"
+            placeholder="Enter your email"
             aria-required="true"
-            aria-describedby={errors.name ? "name-error" : undefined}
+            aria-describedby={errors.email ? "email-error" : undefined}
           />
-          {errors.name && (
+          {errors.email && (
             <div
-              id="name-error"
+              id="email-error"
               className="text-red-500 text-sm mt-1"
               role="alert"
             >
-              {errors.name.message}
+              {errors.email.message}
             </div>
           )}
         </div>
@@ -97,24 +119,29 @@ export default function LoginPage() {
           )}
         </div>
 
-        <hr className="my-6" />
+        <hr className="my-4 sm:my-6" />
         <Button
           disabled={isSubmitting}
           type="submit"
           aria-label="Sign in to admin dashboard"
           size="full"
+          className="text-sm sm:text-base"
         >
-          <LogIn className="mr-2" />
+          <LogIn className="mr-2 w-4 h-4 sm:w-5 sm:h-5" />
           {isSubmitting ? (
-            <Circle className="animate-spin" />
+            <Circle className="animate-spin w-4 h-4 sm:w-5 sm:h-5" />
           ) : (
             <span>Sign In</span>
           )}
         </Button>
 
-        <hr className="mt-12 mb-6" />
+        <hr className="mt-8 sm:mt-12 mb-4 sm:mb-6" />
         <div className="flex justify-center">
-          <LinkComponent href="/" aria-label="Navigate back to home page">
+          <LinkComponent
+            href="/"
+            aria-label="Navigate back to home page"
+            className="text-sm sm:text-base"
+          >
             <ArrowLeft
               width={16}
               height={16}

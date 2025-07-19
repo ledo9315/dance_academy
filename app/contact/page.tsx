@@ -72,27 +72,33 @@ const ContactPage = () => {
   return (
     <main className="min-h-screen container">
       {/* Hero Section */}
-      <Hero imgSrc="/contact-img.jpg" title="Contact" className="mb-24" />
+      <Hero
+        imgSrc="/contact-img.jpg"
+        title="Contact"
+        className="mb-24 px-4 md:px-0"
+      />
 
-      <section className="max-w-3xl mx-auto mb-24">
-        <h2 className="text-center text-3xl mb-6">Send Us a Message</h2>
-        <p className="text-center text-text text-md font-sans">
+      <section className="max-w-3xl mx-auto mb-16 sm:mb-24 px-4 sm:px-0">
+        <h2 className="text-center text-2xl sm:text-3xl mb-4 sm:mb-6">
+          Send Us a Message
+        </h2>
+        <p className="text-center text-text text-sm sm:text-base font-sans">
           Have questions about our classes or want to visit our studio? Fill out
           the form below and we'll get back to you soon.
         </p>
       </section>
 
       {/* Contact Content */}
-      <div className="max-w-4xl mx-auto px-0 md:px-8 pb-16">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
         {/* Contact Form Section */}
-        <div className="mb-48">
+        <div className="mb-24 sm:mb-48">
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="border-2 border-transparent md:border-border py-20 px-4 md:px-20 font-sans"
+            className="border-2 border-transparent md:border-border py-12 sm:py-20 px-4 sm:px-8 md:px-20 font-sans"
             noValidate
           >
             {/* Name and Email Row */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-6">
               <div>
                 <label
                   htmlFor="name"

@@ -12,27 +12,30 @@ const Page = () => {
   }, []);
 
   return (
-    <main className="flex-1 flex flex-col items-center justify-center gap-y-6 pt-10">
+    <main className="flex-1 flex flex-col items-center justify-center gap-y-6 pt-6 sm:pt-10 px-4 sm:px-6">
       <h1 className="sr-only">
         Angela's Dance Academy – Professional Dance Studio in Naples, FL
       </h1>
-      <section className="w-full max-w-[800px] flex flex-col items-center mb-16">
-        <figure className="mb-16">
+      <section className="w-full max-w-[800px] flex flex-col items-center mb-12 sm:mb-16">
+        <figure className="mb-12 sm:mb-16">
           <Image
             src="/home_hero.jpg"
             alt="About our Academy"
             width={800}
             height={530}
+            className="w-full h-auto"
           />
         </figure>
 
         <header className="text-center">
-          <h2 className="text-3xl font-light mb-6">About Our Academy</h2>
-          <div className="border border-accent w-15 mx-auto mb-8" />
+          <h2 className="text-2xl sm:text-3xl font-light mb-4 sm:mb-6">
+            About Our Academy
+          </h2>
+          <div className="border border-accent w-15 mx-auto mb-6 sm:mb-8" />
         </header>
 
-        <article className="text-center text-text space-y-10 font-sans">
-          <p>
+        <article className="text-center text-text space-y-6 sm:space-y-10 font-sans px-4 sm:px-0">
+          <p className="text-sm sm:text-base leading-relaxed">
             For over 20 years, we at Angela's Dance Academy have aimed to create
             more than just a dance studio for our students. We strive for an
             environment which flourishes talent, drive and creativity. We offer
@@ -42,7 +45,7 @@ const Page = () => {
             stretching and conditioning.
           </p>
 
-          <p>
+          <p className="text-sm sm:text-base leading-relaxed">
             Our students are able to showcase their hard work in many ways
             throughout the year. We compete in dance competitions, participate
             in various dance performances within our community and of course our
@@ -56,23 +59,27 @@ const Page = () => {
         </article>
       </section>
 
-      <section className="mb-16 w-full max-w-[800px]">
-        <h2 className="text-2xl font-light text-center mb-14">
+      <section className="mb-12 sm:mb-16 w-full max-w-[800px] px-4 sm:px-0">
+        <h2 className="text-xl sm:text-2xl font-light text-center mb-10 sm:mb-14">
           See Our Academy in Action
         </h2>
 
-        <div className="relative mb-16">
+        <div className="relative mb-12 sm:mb-16">
           {/* Fallback for no JavaScript */}
-          <div className="bg-gray-50 p-8 text-center aspect-video flex flex-col items-center justify-center">
-            <div className="mb-6">
-              <div className="flex flex-col items-center space-y-4">
-                <Play width={60} height={60} className="text-accent" />
-                <h3 className="text-xl text-gray-800 mb-4">
+          <div className="bg-gray-50 p-4 sm:p-8 text-center aspect-video flex flex-col items-center justify-center">
+            <div className="mb-4 sm:mb-6">
+              <div className="flex flex-col items-center space-y-2 sm:space-y-4">
+                <Play
+                  width={40}
+                  height={40}
+                  className="sm:w-[60px] sm:h-[60px] text-accent"
+                />
+                <h3 className="text-lg sm:text-xl text-gray-800 mb-2 sm:mb-4">
                   Watch Our Academy Video
                 </h3>
               </div>
-              <div className="text-text font-sans mb-6">
-                <p className="text-gray-600">
+              <div className="text-text font-sans mb-4 sm:mb-6">
+                <p className="text-gray-600 text-sm sm:text-base">
                   Experience the energy and passion of our dance academy
                 </p>
               </div>
@@ -80,11 +87,15 @@ const Page = () => {
 
             <a
               href="https://www.youtube.com/watch?v=V6akGrZTiDU"
-              className="inline-flex items-center px-6 py-3 bg-accent text-white text-sm font-sans hover:bg-accent-dark transition-colors active:translate-y-0.5"
+              className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-accent text-white text-xs sm:text-sm font-sans hover:bg-accent-dark transition-colors active:translate-y-0.5"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <ExternalLink width={20} height={20} className="mr-2" />
+              <ExternalLink
+                width={16}
+                height={16}
+                className="sm:w-5 sm:h-5 mr-2"
+              />
               Watch on YouTube
             </a>
           </div>
@@ -99,7 +110,7 @@ const Page = () => {
               src="https://www.youtube.com/embed/V6akGrZTiDU"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
-              className="w-full aspect-video absolute top-0 left-0"
+              className="w-full aspect-video flex md:absolute top-0 left-0"
             ></iframe>
           )}
         </div>

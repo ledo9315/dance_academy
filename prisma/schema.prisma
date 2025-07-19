@@ -14,15 +14,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model Album {
-  id          Int      @id @default(autoincrement())
-  title       String   @db.VarChar(100)
-  coverImage  String   @db.VarChar(255)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id         Int      @id @default(autoincrement())
+  title      String   @db.VarChar(100)
+  coverImage String   @db.VarChar(255)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
-  photos      Photo[]
+  photos Photo[]
 
   @@map("albums")
 }
@@ -37,8 +36,82 @@ model Photo {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  albumId   Int
-  album     Album    @relation(fields: [albumId], references: [id], onDelete: Cascade)
+  albumId Int
+  album   Album @relation(fields: [albumId], references: [id], onDelete: Cascade)
 
   @@map("photos")
+}
+
+model User {
+  id            String    @id
+  name          String
+  email         String
+  emailVerified Boolean
+  image         String?
+  createdAt     DateTime
+  updatedAt     DateTime
+  sessions      Session[]
+  accounts      Account[]
+
+  @@unique([email])
+  @@map("user")
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String
+  createdAt DateTime
+  updatedAt DateTime
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime
+  updatedAt             DateTime
+
+  @@map("account")
+}
+
+model Verification {
+  id         String    @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime?
+  updatedAt  DateTime?
+
+  @@map("verification")
+}
+
+model Schedule {
+  id        Int      @id @default(autoincrement())
+  dayOfWeek String   @db.VarChar(20) // Monday, Tuesday, etc.
+  startTime String   @db.VarChar(10) // 5:00 PM
+  endTime   String   @db.VarChar(10) // 7:00 PM
+  ageGroup  String   @db.VarChar(20) // Ages 8-12
+  className String?  @db.VarChar(100) // Optional class name
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("schedule")
 }

@@ -12,7 +12,7 @@ const buttonVariants = cva(
         default:
           "font-sans text-sm bg-accent text-white hover:bg-accent-dark rounded-none cursor-pointer active:translate-y-0.5",
         destructive:
-          "bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
+          "font-sans text-sm text-red-600 hover:text-white border-2 border-red-600 hover:bg-red-600 rounded-none cursor-pointer active:translate-y-0.5 active:border-red-600 visited:border-red-600",
         outline:
           "font-sans text-sm text-accent hover:text-white border-2 border-accent hover:bg-accent rounded-none cursor-pointer active:translate-y-0.5",
         secondary:

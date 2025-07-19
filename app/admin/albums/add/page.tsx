@@ -1,8 +1,10 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import LinkComponent from "@/components/ui/link";
 import { ArrowLeft, ImageUp, Plus, X } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 interface FormData {
@@ -11,6 +13,7 @@ interface FormData {
 }
 
 export default function AddAlbum() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -41,6 +44,10 @@ export default function AddAlbum() {
         throw new Error("Failed to create album");
       }
 
+      if (response.ok) {
+        router.push("/admin/albums");
+      }
+
       return response.json();
     } catch (error) {
       console.error("Error creating album:", error);
@@ -48,12 +55,15 @@ export default function AddAlbum() {
   };
 
   return (
-    <main className="container" role="main">
-      <nav className="mb-12" aria-label="Breadcrumb">
+    <main className="container px-4 sm:px-6 lg:px-8" role="main">
+      <nav
+        className="mb-6 sm:mb-8 md:mb-12 px-4 sm:px-0"
+        aria-label="Breadcrumb"
+      >
         <ol className="flex space-x-1 font-sans text-sm" role="list">
           <li>
-            <Link className="text-accent" href="/admin/dashboard">
-              Dashboard
+            <Link className="text-accent" href="/admin/albums">
+              Album Management
             </Link>
           </li>
           <li className="text-gray-400" aria-hidden="true">
@@ -64,18 +74,21 @@ export default function AddAlbum() {
       </nav>
 
       <section
-        className="border-2 border-border p-20 max-w-4xl mx-auto"
+        className="md:border-2 md:border-border p-4 sm:p-8 md:p-12 lg:p-20 max-w-4xl mx-auto"
         aria-labelledby="album-form-heading"
       >
-        <header className="mb-12">
-          <h1 id="album-form-heading" className="text-2xl mb-4">
+        <header className="mb-8 sm:mb-10 md:mb-12">
+          <h1
+            id="album-form-heading"
+            className="text-xl sm:text-2xl mb-3 sm:mb-4"
+          >
             Create New Album
           </h1>
-          <p className="text-text font-sans">
+          <p className="text-text font-sans text-sm sm:text-base">
             Add a new album to your gallery collection. Fill in the details
             below and upload a cover image.
           </p>
-          <hr className="mt-6" />
+          <hr className="mt-4 sm:mt-6" />
         </header>
 
         <form
@@ -86,8 +99,11 @@ export default function AddAlbum() {
           <fieldset className="mb-6">
             <legend className="sr-only">Album Information</legend>
 
-            <div className="mb-6">
-              <label className="block mb-2" htmlFor="title">
+            <div className="mb-4 sm:mb-6">
+              <label
+                className="block mb-2 text-sm sm:text-base"
+                htmlFor="title"
+              >
                 Album Title{" "}
                 <span className="text-accent" aria-label="required">
                   *
@@ -96,7 +112,7 @@ export default function AddAlbum() {
               <input
                 type="text"
                 id="title"
-                className={`w-full border-2 border-border p-3 ${
+                className={`w-full border-2 border-border p-2 sm:p-3 text-sm sm:text-base ${
                   errors.title ? "border-red-500" : ""
                 }`}
                 placeholder="Enter album title..."
@@ -126,8 +142,11 @@ export default function AddAlbum() {
               )}
             </div>
 
-            <div className="mb-6">
-              <label className="block mb-2" htmlFor="coverImage">
+            <div className="mb-4 sm:mb-6">
+              <label
+                className="block mb-2 text-sm sm:text-base"
+                htmlFor="coverImage"
+              >
                 Cover Image{" "}
                 <span className="text-accent" aria-label="required">
                   *
@@ -175,16 +194,16 @@ export default function AddAlbum() {
                 />
                 <label
                   htmlFor="coverImage"
-                  className="w-full border-2 border-border border-dashed p-4 cursor-pointer hover:border-accent transition-colors duration-300 flex items-center justify-center min-h-[120px] bg-gray-50 hover:bg-accent/10"
+                  className="w-full border-2 border-border border-dashed p-3 sm:p-4 cursor-pointer hover:border-accent transition-colors duration-300 flex items-center justify-center min-h-[100px] sm:min-h-[120px] bg-gray-50 hover:bg-accent/10"
                 >
                   <div className="flex flex-col items-center justify-center">
-                    <div className="text-4xl mb-2">
+                    <div className="text-3xl sm:text-4xl mb-2">
                       <ImageUp
-                        className="w-10 h-10 text-accent"
+                        className="w-8 h-8 sm:w-10 sm:h-10 text-accent"
                         aria-hidden="true"
                       />
                     </div>
-                    <p className="text-sm text-text">
+                    <p className="text-xs sm:text-sm text-text text-center">
                       Click here to select an image
                     </p>
                   </div>
@@ -222,19 +241,25 @@ export default function AddAlbum() {
           )}
           <hr className="my-6" />
 
-          <nav className="flex justify-end gap-4" aria-label="Form actions">
-            <LinkComponent variant="outline-button" href="/admin/albums">
+          <nav
+            className="flex flex-col sm:flex-row justify-end gap-3 sm:gap-4"
+            aria-label="Form actions"
+          >
+            <LinkComponent
+              variant="outline-button"
+              href="/admin/albums"
+              className="w-full sm:w-auto"
+            >
               <ArrowLeft className="w-4 h-4 mr-1" aria-hidden="true" /> Cancel
             </LinkComponent>
-            <button
+            <Button
               type="submit"
               disabled={isSubmitting}
               aria-describedby="submit-status"
-              className="w-full md:w-fit flex justify-center items-center text-sm px-8 py-3 bg-accent text-white hover:bg-accent-dark cursor-pointer active:translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Plus className="w-4 h-4 mr-1" aria-hidden="true" />
               {isSubmitting ? "Creating..." : "Create Album"}
-            </button>
+            </Button>
           </nav>
 
           {isSubmitting && (
