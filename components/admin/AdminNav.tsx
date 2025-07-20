@@ -15,7 +15,7 @@ export default function AdminNav() {
         href="/admin/albums/add"
         className="w-full sm:w-auto"
       >
-        <Plus className="w-4 h-4" />
+        <Plus className="w-4 h-4 mr-1" />
         Add New Album
       </LinkComponent>
       <LinkComponent
@@ -23,7 +23,7 @@ export default function AdminNav() {
         href="/admin/schedule"
         className="w-full sm:w-auto"
       >
-        <Calendar className="w-4 h-4" />
+        <Calendar className="w-4 h-4 mr-2" />
         Manage Schedule
       </LinkComponent>
       <Button

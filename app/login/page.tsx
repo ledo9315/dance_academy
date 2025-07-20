@@ -2,14 +2,26 @@
 import { authClient } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import LinkComponent from "@/components/ui/link";
-import { ArrowLeft, Circle, LogIn } from "lucide-react";
+import {
+  ArrowLeft,
+  Circle,
+  LogIn,
+  AlertCircle,
+  CheckCircle,
+} from "lucide-react";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 
 export default function LoginPage() {
   interface LoginForm {
     email: string;
     password: string;
   }
+
+  const [loginStatus, setLoginStatus] = useState<{
+    type: "success" | "error" | null;
+    message: string;
+  }>({ type: null, message: "" });
 
   const {
     register,
@@ -21,6 +33,8 @@ export default function LoginPage() {
   });
 
   const onSubmit = async (formData: LoginForm) => {
+    setLoginStatus({ type: null, message: "" });
+
     const { data, error } = await authClient.signIn.email(
       {
         email: formData.email,
@@ -33,10 +47,35 @@ export default function LoginPage() {
         },
         onSuccess: (ctx) => {
           console.log("Success...");
+          setLoginStatus({
+            type: "success",
+            message: "Login successful! Redirecting...",
+          });
         },
         onError: (ctx) => {
-          console.log("Error...", error);
-          alert(ctx.error.message);
+          console.log("Error...", ctx.error);
+          let errorMessage = "Login failed. Please check your credentials.";
+
+          // Specific error messages based on error type
+          if (ctx.error.message.includes("Invalid credentials")) {
+            errorMessage = "Email or password is incorrect. Please try again.";
+          } else if (ctx.error.message.includes("User not found")) {
+            errorMessage = "User not found. Please check your email address.";
+          } else if (ctx.error.message.includes("Too many attempts")) {
+            errorMessage =
+              "Too many login attempts. Please wait a few minutes.";
+          } else if (ctx.error.message.includes("Email not verified")) {
+            errorMessage =
+              "Email address not verified. Please check your inbox.";
+          }
+
+          setLoginStatus({
+            type: "error",
+            message: errorMessage,
+          });
+
+          // Clear password field on error
+          reset({ email: formData.email, password: "" });
         },
       }
     );
@@ -118,6 +157,29 @@ export default function LoginPage() {
             </div>
           )}
         </div>
+
+        {/* Login Status Messages */}
+        {loginStatus.type === "error" && (
+          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-md">
+            <div className="flex items-center gap-2">
+              <AlertCircle className="w-5 h-5 text-red-600" />
+              <p className="text-red-800 text-sm font-medium">
+                {loginStatus.message}
+              </p>
+            </div>
+          </div>
+        )}
+
+        {loginStatus.type === "success" && (
+          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-md">
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-5 h-5 text-green-600" />
+              <p className="text-green-800 text-sm font-medium">
+                {loginStatus.message}
+              </p>
+            </div>
+          </div>
+        )}
 
         <hr className="my-4 sm:my-6" />
         <Button
