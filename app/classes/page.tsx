@@ -108,6 +108,7 @@ const Page = () => {
           <h2 className="text-center text-2xl sm:text-3xl mb-4 sm:mb-6">
             Dance Programs for Every Age
           </h2>
+          <div className="border border-accent w-15 mx-auto mb-6 sm:mb-8" />
           <p className="text-center text-text text-sm sm:text-base font-sans">
             From our youngest dancers to advanced competitors, Angela's Dance
             Academy offers comprehensive programs designed to nurture talent,

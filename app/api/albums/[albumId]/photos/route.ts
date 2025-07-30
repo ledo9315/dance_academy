@@ -1,7 +1,6 @@
 import prisma from "@/lib/prisma";
-import { mkdir, unlink, writeFile } from "fs/promises";
 import { NextRequest, NextResponse } from "next/server";
-import { join } from "path";
+import { put } from "@vercel/blob";
 
 export async function GET(
   request: NextRequest,
@@ -39,21 +38,16 @@ export async function POST(
     console.log("albumId:", albumId);
 
     for (const photo of photos) {
-      const bytes = await photo.arrayBuffer();
-      const buffer = Buffer.from(bytes);
-      const fileName = `${Date.now()}-${photo.name}`;
-      const filePath = `/photos/${albumId}/${fileName}`;
-
-      const photosDir = join(process.cwd(), "public", "photos", `${albumId}`);
-      await mkdir(photosDir, { recursive: true });
-
-      await writeFile(join(photosDir, fileName), buffer);
+      // Upload file to Vercel Blob
+      const blob = await put(photo.name, photo, {
+        access: "public",
+      });
 
       const image = await prisma.photo.create({
         data: {
-          filename: fileName,
+          filename: photo.name,
           originalName: photo.name,
-          path: filePath,
+          path: blob.url,
           size: photo.size,
           mimeType: photo.type,
           albumId: Number(albumId),

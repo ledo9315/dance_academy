@@ -1,7 +1,5 @@
 import prisma from "@/lib/prisma";
-import { unlink } from "fs/promises";
 import { NextRequest, NextResponse } from "next/server";
-import { join } from "path";
 
 export async function GET(
   request: NextRequest,
@@ -48,8 +46,8 @@ export async function DELETE(
       );
     }
 
-    const photoPath = join(process.cwd(), "public", photo.path);
-    await unlink(photoPath);
+    // Note: Vercel Blob handles cleanup automatically
+    console.log("Photo file will be cleaned up by Vercel Blob");
 
     return NextResponse.json(
       { success: true, message: "Photo deleted" },

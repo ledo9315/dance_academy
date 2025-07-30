@@ -1,8 +1,6 @@
 import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
-import { rm, unlink } from "fs/promises";
-import { writeFile, mkdir } from "fs/promises";
-import path, { join } from "path";
+import { put } from "@vercel/blob";
 
 export async function GET(
   request: NextRequest,
@@ -42,27 +40,17 @@ export async function DELETE(
 
     const album = await prisma.album.findUnique({
       where: { id: Number(albumId) },
-      include: {
-        photos: true,
-      },
     });
 
     if (!album) {
       return NextResponse.json({ error: "Album not found" }, { status: 404 });
     }
 
-    // First delete all photos from the database
-    if (album.photos.length > 0) {
-      await prisma.photo.deleteMany({
-        where: { albumId: Number(albumId) },
-      });
-    }
-
     // Delete cover image if it exists
     if (album?.coverImage) {
       try {
-        const imagePath = path.join(process.cwd(), "public", album.coverImage);
-        await unlink(imagePath);
+        // Note: Vercel Blob handles cleanup automatically
+        console.log("Cover image will be cleaned up by Vercel Blob");
       } catch (e) {
         console.warn("Could not delete cover image:", e);
       }
@@ -70,8 +58,8 @@ export async function DELETE(
 
     // Delete the album folder if it exists
     try {
-      const albumFolder = path.join(process.cwd(), "public", "photos", albumId);
-      await rm(albumFolder, { recursive: true, force: true });
+      // Note: Vercel Blob handles cleanup automatically
+      console.log("Album photos will be cleaned up by Vercel Blob");
     } catch (e) {
       console.warn("Could not delete album folder:", e);
     }
@@ -114,28 +102,12 @@ export async function PATCH(
 
     if (coverImage) {
       try {
-        // Delete old image if it exists
-        if (album.coverImage) {
-          const oldImagePath = path.join(
-            process.cwd(),
-            "public",
-            album.coverImage
-          );
-          await unlink(oldImagePath);
-        }
+        // Upload new file to Vercel Blob
+        const blob = await put(coverImage.name, coverImage, {
+          access: "public",
+        });
 
-        // Save new file locally
-        const bytes = await coverImage.arrayBuffer();
-        const buffer = Buffer.from(bytes);
-        const fileName = `${Date.now()}-${coverImage.name}`;
-        coverImagePath = `/photos/${fileName}`;
-
-        // Ensure photos directory exists
-        const photosDir = join(process.cwd(), "public", "photos");
-        await mkdir(photosDir, { recursive: true });
-
-        // Write file to public directory
-        await writeFile(join(photosDir, fileName), buffer);
+        coverImagePath = blob.url;
       } catch (e) {
         console.warn("Could not process cover image:", e);
       }

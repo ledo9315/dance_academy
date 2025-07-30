@@ -120,9 +120,9 @@ export default function SchedulePage() {
       <Hero imgSrc="/6.jpg" title="Schedule" className="mb-24 px-4 md:px-0" />
       <section className="w-full max-w-[800px] flex flex-col items-center mb-12 sm:mb-16">
         <header className="text-center mb-12 sm:mb-16">
-          <h1 className="text-2xl sm:text-3xl font-light mb-4 sm:mb-6">
+          <h2 className="text-2xl sm:text-3xl font-light mb-4 sm:mb-6">
             Class Schedule
-          </h1>
+          </h2>
           <div className="border border-accent w-15 mx-auto mb-6 sm:mb-8" />
           <p className="text-text font-sans text-sm sm:text-base max-w-2xl">
             Join us for our weekly dance classes designed for all ages and skill

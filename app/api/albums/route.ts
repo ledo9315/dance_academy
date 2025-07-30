@@ -1,7 +1,6 @@
 import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
-import { writeFile, mkdir } from "fs/promises";
-import { join } from "path";
+import { put } from "@vercel/blob";
 
 export async function GET() {
   try {
@@ -26,28 +25,24 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Save file locally
-    const bytes = await coverImage.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-    const fileName = `${Date.now()}-${coverImage.name}`;
-    const filePath = `/photos/album_covers/${fileName}`;
-
-    // Ensure photos directory exists
-    const photosDir = join(process.cwd(), "public", "photos", "album_covers");
-    await mkdir(photosDir, { recursive: true });
-
-    // Write file to public directory
-    await writeFile(join(photosDir, fileName), buffer);
+    // Upload file to Vercel Blob
+    const blob = await put(coverImage.name, coverImage, {
+      access: "public",
+    });
 
     const album = await prisma.album.create({
       data: {
         title,
-        coverImage: filePath,
+        coverImage: blob.url,
       },
     });
 
     return NextResponse.json({ success: true, album }, { status: 201 });
   } catch (error) {
-    return NextResponse.json({ error: "Server Error" }, { status: 500 });
+    console.error("Error creating album:", error);
+    return NextResponse.json(
+      { error: "Failed to create album" },
+      { status: 500 }
+    );
   }
 }

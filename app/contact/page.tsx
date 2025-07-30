@@ -118,6 +118,7 @@ const ContactPage = () => {
           <h2 className="text-center text-2xl sm:text-3xl mb-4 sm:mb-6">
             Send Us a Message
           </h2>
+          <div className="border border-accent w-15 mx-auto mb-6 sm:mb-8" />
           <p className="text-center text-text text-sm sm:text-base font-sans">
             Have questions about our classes or want to visit our studio? Fill
             out the form below and we'll get back to you soon.

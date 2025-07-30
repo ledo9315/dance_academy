@@ -60,6 +60,7 @@ const GalleryPage = () => {
         <h2 className="text-center text-2xl sm:text-3xl mb-4 sm:mb-6">
           Dance Memories
         </h2>
+        <div className="border border-accent w-15 mx-auto mb-6 sm:mb-8" />
         <p className="text-center text-text text-sm sm:text-base font-sans">
           Explore our collection of performances, competitions, studio moments,
           and special events from Angela's Dance Academy.
