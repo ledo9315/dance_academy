@@ -34,7 +34,6 @@ export const metadata: Metadata = {
     "dance academy Naples FL",
     "ballet classes Naples Florida",
     "jazz dance classes Naples",
-    "dance studio Naples FL",
     "dance academy Naples Florida",
     "children dance classes Naples",
     "dance lessons Naples FL",
@@ -56,6 +55,7 @@ export const metadata: Metadata = {
     "teen dance classes Naples",
     "adult dance classes Naples",
     "dance fitness Naples",
+    "dance studios Naples",
     "dance technique Naples",
     "dance choreography Naples",
     "dance studio near me Naples",
@@ -108,9 +108,6 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
       "max-snippet": -1,
     },
-  },
-  verification: {
-    google: "your-google-verification-code",
   },
 };
 
