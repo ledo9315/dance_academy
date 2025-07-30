@@ -2,6 +2,7 @@
 
 import { Hero } from "@/components/Hero";
 import { Album } from "@/types";
+import { getImageSource } from "@/lib/utils";
 import { Eye } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -78,12 +79,13 @@ const GalleryPage = () => {
                 className="block w-full aspect-[4/3]"
               >
                 <Image
-                  src={album.coverImage}
+                  src={getImageSource(album.coverImage)}
                   alt={album.title}
                   width={290}
                   height={220}
                   className="w-full h-full object-cover"
                   priority={false}
+                  unoptimized={album.coverImage.startsWith("data:")}
                 />
               </Link>
               <span

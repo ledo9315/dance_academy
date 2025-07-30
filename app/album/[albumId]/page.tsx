@@ -1,53 +1,33 @@
 "use client";
 
-import LinkComponent from "@/components/ui/link";
+import { Album } from "@/types";
+import { getImageSource } from "@/lib/utils";
 import { ArrowLeft, Eye } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState, use } from "react";
-
-interface Album {
-  id: number;
-  title: string;
-}
-
-interface Photo {
-  id: number;
-  path: string;
-  filename: string;
-}
+import { use } from "react";
+import { useEffect, useState } from "react";
+import LinkComponent from "@/components/ui/link";
 
 const AlbumPage = ({ params }: { params: Promise<{ albumId: string }> }) => {
   const { albumId } = use(params);
   const [album, setAlbum] = useState<Album | null>(null);
-  const [photos, setPhotos] = useState<Photo[]>([]);
+  const [photos, setPhotos] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch album details
-        const albumRes = await fetch(`/api/albums/${albumId}`);
-        if (!albumRes.ok) {
-          setError("Album not found");
-          return;
-        }
-        const { album: albumData } = await albumRes.json();
+        const res = await fetch(`/api/albums/${albumId}`);
+        const { album } = await res.json();
 
-        // Fetch album photos
         const photosRes = await fetch(`/api/albums/${albumId}/photos`);
-        if (!photosRes.ok) {
-          setError("Error loading photos");
-          return;
-        }
-        const { photos: photosData } = await photosRes.json();
+        const { photos } = await photosRes.json();
 
-        setAlbum(albumData);
-        setPhotos(photosData);
+        setAlbum(album);
+        setPhotos(photos);
       } catch (error) {
         console.error("Error fetching data:", error);
-        setError("Failed to load album data");
       } finally {
         setIsLoading(false);
       }
@@ -58,7 +38,7 @@ const AlbumPage = ({ params }: { params: Promise<{ albumId: string }> }) => {
 
   if (isLoading) {
     return (
-      <main className="container">
+      <main className="container mx-auto py-8">
         <div className="flex justify-center items-center py-12">
           <p className="text-text">Loading album...</p>
         </div>
@@ -66,38 +46,20 @@ const AlbumPage = ({ params }: { params: Promise<{ albumId: string }> }) => {
     );
   }
 
-  if (error || !album) {
+  if (!album) {
     return (
-      <main className="container">
+      <main className="container mx-auto py-8">
         <div className="flex justify-center items-center py-12">
-          <p className="text-text">{error || "Album not found"}</p>
+          <p className="text-text">Album not found</p>
         </div>
       </main>
     );
   }
 
   return (
-    <main className="container">
-      <nav className="mb-8 sm:mb-12 px-4 sm:px-0" aria-label="Breadcrumb">
-        <ol className="flex space-x-1 font-sans text-sm" role="list">
-          <li>
-            <Link className="text-accent" href="/album">
-              Gallery
-            </Link>
-          </li>
-          <li className="text-gray-400" aria-hidden="true">
-            /
-          </li>
-          <li aria-current="page" className="truncate">
-            {album.title}
-          </li>
-        </ol>
-      </nav>
-
-      <header className="relative mb-12 sm:mb-16 px-4 sm:px-0">
-        <h1 className="text-center text-2xl sm:text-3xl lg:text-4xl before:content-[''] before:absolute before:bottom-[-15px] before:left-1/2 before:-translate-x-1/2 before:h-0.5 before:w-12 before:bg-accent ">
-          {album.title}
-        </h1>
+    <main className="container mx-auto py-8">
+      <header className="mb-12">
+        <h1 className="text-2xl sm:text-3xl font-bold mb-4">{album.title}</h1>
       </header>
 
       <section className="mb-30 px-4" aria-labelledby="gallery-heading">
@@ -114,11 +76,12 @@ const AlbumPage = ({ params }: { params: Promise<{ albumId: string }> }) => {
               className="aspect-[3/2] w-full overflow-hidden focus-within:ring-2 focus-within:ring-accent focus-within:ring-offset-2 relative group"
             >
               <Image
-                src={image.path}
+                src={getImageSource(image.path)}
                 alt={image.filename}
                 className="h-full w-full object-cover"
                 width={300}
                 height={200}
+                unoptimized={image.path.startsWith("data:")}
               />
               <div className="absolute inset-0 bg-accent/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               <Link

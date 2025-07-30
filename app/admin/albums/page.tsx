@@ -3,6 +3,7 @@
 import { AlbumActions } from "@/components/admin/AlbumActions";
 import AdminNav from "@/components/admin/AdminNav";
 import { Album } from "@/types";
+import { getImageSource } from "@/lib/utils";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -64,10 +65,11 @@ export default function Dashboard() {
               <div className="relative overflow-hidden">
                 <Image
                   className="w-full h-64 object-cover"
-                  src={album.coverImage}
+                  src={getImageSource(album.coverImage)}
                   alt={album.title}
                   width={400}
                   height={256}
+                  unoptimized={album.coverImage.startsWith("data:")}
                 />
 
                 <div className="p-4 sm:p-6 space-y-4">
