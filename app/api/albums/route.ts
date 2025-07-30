@@ -25,15 +25,29 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Upload file to Vercel Blob
-    const blob = await put(coverImage.name, coverImage, {
-      access: "public",
-    });
+    let coverImageUrl: string;
+
+    try {
+      // Try to upload to Vercel Blob
+      const blob = await put(coverImage.name, coverImage, {
+        access: "public",
+      });
+      coverImageUrl = blob.url;
+    } catch (blobError) {
+      console.error("Vercel Blob error:", blobError);
+
+      // Fallback: Convert to base64 for database storage
+      const bytes = await coverImage.arrayBuffer();
+      const buffer = Buffer.from(bytes);
+      coverImageUrl = `data:${coverImage.type};base64,${buffer.toString(
+        "base64"
+      )}`;
+    }
 
     const album = await prisma.album.create({
       data: {
         title,
-        coverImage: blob.url,
+        coverImage: coverImageUrl,
       },
     });
 

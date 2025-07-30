@@ -38,16 +38,28 @@ export async function POST(
     console.log("albumId:", albumId);
 
     for (const photo of photos) {
-      // Upload file to Vercel Blob
-      const blob = await put(photo.name, photo, {
-        access: "public",
-      });
+      let photoUrl: string;
+
+      try {
+        // Try to upload to Vercel Blob
+        const blob = await put(photo.name, photo, {
+          access: "public",
+        });
+        photoUrl = blob.url;
+      } catch (blobError) {
+        console.error("Vercel Blob error:", blobError);
+
+        // Fallback: Convert to base64 for database storage
+        const bytes = await photo.arrayBuffer();
+        const buffer = Buffer.from(bytes);
+        photoUrl = `data:${photo.type};base64,${buffer.toString("base64")}`;
+      }
 
       const image = await prisma.photo.create({
         data: {
           filename: photo.name,
           originalName: photo.name,
-          path: blob.url,
+          path: photoUrl,
           size: photo.size,
           mimeType: photo.type,
           albumId: Number(albumId),

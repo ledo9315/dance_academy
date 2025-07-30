@@ -102,14 +102,21 @@ export async function PATCH(
 
     if (coverImage) {
       try {
-        // Upload new file to Vercel Blob
+        // Try to upload to Vercel Blob
         const blob = await put(coverImage.name, coverImage, {
           access: "public",
         });
 
         coverImagePath = blob.url;
-      } catch (e) {
-        console.warn("Could not process cover image:", e);
+      } catch (blobError) {
+        console.error("Vercel Blob error:", blobError);
+
+        // Fallback: Convert to base64 for database storage
+        const bytes = await coverImage.arrayBuffer();
+        const buffer = Buffer.from(bytes);
+        coverImagePath = `data:${coverImage.type};base64,${buffer.toString(
+          "base64"
+        )}`;
       }
     }
 
