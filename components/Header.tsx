@@ -59,7 +59,7 @@ export default function Header() {
       {/* Desktop nav */}
       <nav className="hidden md:flex justify-between items-center w-full pt-4 sm:pt-6">
         <div className="h-0.5 bg-accent flex-1"></div>
-        <ul className="flex gap-x-4 lg:gap-x-8 px-4 lg:px-6 text-black/50 uppercase text-sm lg:text-base">
+        <ul className="flex gap-x-4 lg:gap-x-8 px-4 lg:px-6 text-black/50 uppercase text-sm font-sans">
           {NAV_LINKS.map((link) => (
             <li key={link.label}>
               <Link

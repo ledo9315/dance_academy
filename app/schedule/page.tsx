@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Calendar, Clock, Users } from "lucide-react";
+import { Hero } from "@/components/Hero";
 
 interface ScheduleItem {
   id: number;
@@ -115,7 +116,8 @@ export default function SchedulePage() {
   }
 
   return (
-    <main className="flex-1 flex flex-col items-center justify-center gap-y-6 pt-6 sm:pt-10 px-4 sm:px-6">
+    <main className="container flex-1 flex flex-col items-center justify-center gap-y-6 pt-6 sm:pt-10 px-4 sm:px-6">
+      <Hero imgSrc="/6.jpg" title="Schedule" className="mb-24 px-4 md:px-0" />
       <section className="w-full max-w-[800px] flex flex-col items-center mb-12 sm:mb-16">
         <header className="text-center mb-12 sm:mb-16">
           <h1 className="text-2xl sm:text-3xl font-light mb-4 sm:mb-6">
