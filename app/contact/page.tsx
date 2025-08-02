@@ -320,6 +320,7 @@ const ContactPage = () => {
                     <p className="text-black font-medium">
                       Angela's Dance Academy
                     </p>
+                    <p>(239)555-0123</p>
                     <p>12840 Tamiami Trail N Suite 300</p>
                     <p>Naples, FL 34110</p>
                   </div>
