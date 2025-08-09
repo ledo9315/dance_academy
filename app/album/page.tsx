@@ -3,7 +3,6 @@
 import { Hero } from "@/components/Hero";
 import { Album } from "@/types";
 import { getImageSource } from "@/lib/utils";
-import { Eye } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -22,9 +21,18 @@ const GalleryPage = () => {
           id: album.id,
           title: album.title,
           coverImage: album.coverImage,
+          createdAt: album.createdAt,
         }));
 
-        setAlbums(albumsData);
+        console.log(albumsData);
+
+        setAlbums(
+          albumsData.sort(
+            (a, b) =>
+              (b.createdAt ? new Date(b.createdAt).getTime() : 0) -
+              (a.createdAt ? new Date(a.createdAt).getTime() : 0)
+          )
+        );
       } catch (error) {
         console.error("Error fetching albums:", error);
       } finally {
