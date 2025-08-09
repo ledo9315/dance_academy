@@ -1,16 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { use } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { useEffect, useState, use } from "react";
 import { useRouter } from "next/navigation";
+import { ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut } from "lucide-react";
 
 const InterceptedImageModal = ({
   params,
@@ -22,17 +15,16 @@ const InterceptedImageModal = ({
   const [photo, setPhoto] = useState<any>(null);
   const [photos, setPhotos] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [zoom, setZoom] = useState(1);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch photo details
         const photoRes = await fetch(
           `/api/albums/${albumId}/photos/${imageId}`
         );
         const photoData = await photoRes.json();
 
-        // Fetch all photos for navigation
         const photosRes = await fetch(`/api/albums/${albumId}/photos`);
         const photosData = await photosRes.json();
 
@@ -44,133 +36,167 @@ const InterceptedImageModal = ({
         setLoading(false);
       }
     };
-
     fetchData();
   }, [albumId, imageId]);
 
-  const handleOpenChange = (open: boolean) => {
-    if (!open) {
-      router.back();
+  const handleClose = () => {
+    setZoom(1);
+    router.back();
+  };
+
+  const currentIndex = photos.findIndex((p) => p.id === parseInt(imageId));
+
+  const navigateToImage = (direction: "prev" | "next") => {
+    if (direction === "prev" && currentIndex > 0) {
+      setZoom(1);
+      router.replace(`/album/${albumId}/${photos[currentIndex - 1].id}`);
+    } else if (direction === "next" && currentIndex < photos.length - 1) {
+      setZoom(1);
+      router.replace(`/album/${albumId}/${photos[currentIndex + 1].id}`);
     }
   };
 
-  const currentIndex = photos.findIndex((p: any) => p.id === parseInt(imageId));
+  const handleZoom = (direction: "in" | "out") => {
+    if (direction === "in" && zoom < 3) {
+      setZoom((prev) => Math.min(prev + 0.5, 3));
+    } else if (direction === "out" && zoom > 0.5) {
+      setZoom((prev) => Math.max(prev - 0.5, 0.5));
+    }
+  };
+
+  const resetView = () => {
+    setZoom(1);
+  };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "ArrowLeft" && currentIndex > 0) {
+      if (e.key === "ArrowLeft") {
         e.preventDefault();
-        const prevPhoto = photos[currentIndex - 1];
-        router.replace(`/album/${albumId}/${prevPhoto.id}`);
-      } else if (e.key === "ArrowRight" && currentIndex < photos.length - 1) {
+        navigateToImage("prev");
+      } else if (e.key === "ArrowRight") {
         e.preventDefault();
-        const nextPhoto = photos[currentIndex + 1];
-        router.replace(`/album/${albumId}/${nextPhoto.id}`);
+        navigateToImage("next");
       } else if (e.key === "Escape") {
         e.preventDefault();
-        router.back();
+        handleClose();
+      } else if (e.key === "+" || e.key === "=") {
+        e.preventDefault();
+        handleZoom("in");
+      } else if (e.key === "-") {
+        e.preventDefault();
+        handleZoom("out");
+      } else if (e.key === "0") {
+        e.preventDefault();
+        resetView();
       }
     };
-
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [currentIndex, photos, albumId, router]);
+  }, [currentIndex, photos, albumId, router, zoom]);
 
-  if (loading) {
-    return (
-      <Dialog open onOpenChange={(open) => !open && router.back()}>
-        <DialogContent className="w-auto h-auto max-w-[90vw] max-h-[90vh] p-0 bg-transparent border-none shadow-none">
-          <DialogTitle className="sr-only">Loading...</DialogTitle>
-          <div className="flex items-center justify-center w-full h-64">
-            <div className="text-white">Loading...</div>
-          </div>
-        </DialogContent>
-      </Dialog>
-    );
-  }
+  const LoadingOrError = (message: string) => (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
+      <div className="text-white text-xl font-medium bg-black/50 px-6 py-4 rounded-lg backdrop-blur-sm">
+        {message}
+      </div>
+    </div>
+  );
 
-  if (!photo) {
-    return (
-      <Dialog open onOpenChange={(open) => !open && router.back()}>
-        <DialogContent className="w-auto h-auto max-w-[90vw] max-h-[90vh] p-0 bg-transparent border-none shadow-none">
-          <DialogTitle className="sr-only">Photo not found</DialogTitle>
-          <div className="flex items-center justify-center w-full h-64">
-            <div className="text-white">Photo not found</div>
-          </div>
-        </DialogContent>
-      </Dialog>
-    );
-  }
+  if (loading) return LoadingOrError("Loading...");
+  if (!photo) return LoadingOrError("Photo not found");
 
   return (
-    <Dialog
-      open
-      onOpenChange={handleOpenChange}
-      aria-label={`Imageview: ${photo.filename}`}
-    >
-      <DialogContent
-        showCloseButton={true}
-        className="w-auto h-auto max-w-[90vw] max-h-[90vh] p-0 bg-transparent border-none shadow-none [&>button]:text-white [&>button]:cursor-pointer [&>button]:p-2 [&>button]:bg-black/50 [&>button]:rounded-full [&>button]:hover:bg-black/70"
-        aria-describedby="image-description"
-      >
-        <DialogTitle className="sr-only">{photo.filename}</DialogTitle>
-
-        <DialogDescription id="image-description" className="sr-only">
-          {photo.filename}
-        </DialogDescription>
-
-        <figure className="relative w-auto h-auto max-w-[90vw] max-h-[90vh]">
-          <Image
-            src={photo.path}
-            alt={photo.filename}
-            width={1200}
-            height={800}
-            className="object-contain max-w-full max-h-[90vh]"
-            sizes="(max-width: 768px) 90vw, (max-width: 1200px) 80vw, 1200px"
-            priority
-            aria-labelledby="image-title"
-          />
-
-          <figcaption
-            className="absolute left-2 bottom-2 text-white/60"
-            id="image-title"
-          >
-            {photo.filename}
-          </figcaption>
-
-          {/* Navigation Buttons */}
-          {currentIndex > 0 && (
-            <button
-              onClick={() => {
-                const prevPhoto = photos[currentIndex - 1];
-                router.replace(`/album/${albumId}/${prevPhoto.id}`);
-              }}
-              className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full cursor-pointer"
-              aria-label="Previous image"
-            >
-              <ArrowLeft className="w-6 h-6" />
-            </button>
-          )}
-
-          {currentIndex < photos.length - 1 && (
-            <button
-              onClick={() => {
-                const nextPhoto = photos[currentIndex + 1];
-                router.replace(`/album/${albumId}/${nextPhoto.id}`);
-              }}
-              className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full cursor-pointer"
-              aria-label="Next image"
-            >
-              <ArrowRight className="w-6 h-6 " />
-            </button>
-          )}
-
-          <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
-            {currentIndex + 1} / {photos.length}
+    <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm">
+      {/* Header mit Steuerungen */}
+      <div className="absolute top-0 left-0 right-0 z-50 bg-gradient-to-b from-black/80 to-transparent p-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2 text-white">
+            <span className="text-sm opacity-80">
+              {currentIndex + 1} of {photos.length}
+            </span>
+            <span className="text-xs opacity-60">|</span>
+            <span className="text-xs opacity-60">{photo.filename}</span>
           </div>
-        </figure>
-      </DialogContent>
-    </Dialog>
+
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => handleZoom("out")}
+              disabled={zoom <= 0.5}
+              className="text-white hover:bg-white/20 p-2 rounded transition-colors disabled:opacity-50 cursor-pointer"
+              title="Zoom Out (-)"
+            >
+              <ZoomOut className="w-4 h-4" />
+            </button>
+            <button
+              onClick={() => handleZoom("in")}
+              disabled={zoom >= 3}
+              className="text-white hover:bg-white/20 p-2 rounded transition-colors disabled:opacity-50 cursor-pointer"
+              title="Zoom In (+)"
+            >
+              <ZoomIn className="w-4 h-4" />
+            </button>
+            <button
+              onClick={handleClose}
+              className="text-white hover:bg-white/20 p-2 rounded transition-colors cursor-pointer"
+              title="Close (ESC)"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Navigation Buttons */}
+      {currentIndex > 0 && (
+        <button
+          onClick={() => navigateToImage("prev")}
+          className="absolute left-4 top-1/2 -translate-y-1/2 z-50 text-white hover:bg-white/20 bg-black/50 backdrop-blur-sm p-3 rounded transition-colors cursor-pointer"
+          title="Previous Image (←)"
+        >
+          <ChevronLeft className="w-6 h-6" />
+        </button>
+      )}
+
+      {currentIndex < photos.length - 1 && (
+        <button
+          onClick={() => navigateToImage("next")}
+          className="absolute right-4 top-1/2 -translate-y-1/2 z-50 text-white hover:bg-white/20 bg-black/50 backdrop-blur-sm p-3 rounded transition-colors cursor-pointer"
+          title="Next Image (→)"
+        >
+          <ChevronRight className="w-6 h-6" />
+        </button>
+      )}
+
+      {/* Bild Container */}
+      <div className="absolute inset-0 flex items-center justify-center p-4">
+        <img
+          src={photo.path}
+          alt={photo.filename}
+          className="max-w-full max-h-full object-contain transition-all duration-300 ease-in-out"
+          style={{
+            transform: `scale(${zoom})`,
+            cursor: zoom > 1 ? "grab" : "default",
+          }}
+          draggable={zoom > 1}
+        />
+      </div>
+
+      {/* Zoom Indicator */}
+      {zoom !== 1 && (
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 text-white px-3 py-1 rounded-full text-sm backdrop-blur-sm">
+          {Math.round(zoom * 100)}%
+        </div>
+      )}
+
+      {/* Keyboard Shortcuts Help */}
+      <div className="absolute bottom-4 right-4 bg-black/70 text-white px-3 py-2 rounded-lg text-xs backdrop-blur-sm opacity-0 hover:opacity-100 transition-opacity">
+        <div className="font-medium mb-1">Keyboard Shortcuts:</div>
+        <div>← → Navigation</div>
+        <div>+ - Zoom</div>
+        <div>0 Reset</div>
+        <div>ESC Close</div>
+      </div>
+    </div>
   );
 };
 

@@ -58,8 +58,21 @@ const AlbumPage = ({ params }: { params: Promise<{ albumId: string }> }) => {
 
   return (
     <main className="container mx-auto py-8">
+      <nav className="mb-12" aria-label="Breadcrumb">
+        <ol className="flex space-x-1 font-sans text-sm" role="list">
+          <li>
+            <Link className="text-accent" href="/album">
+              Gallery
+            </Link>
+          </li>
+          <li className="text-gray-400" aria-hidden="true">
+            /
+          </li>
+          <li aria-current="page">{album.title}</li>
+        </ol>
+      </nav>
       <header className="mb-12">
-        <h1 className="text-2xl sm:text-3xl font-bold mb-4">{album.title}</h1>
+        <h1 className="sr-only">{album.title}</h1>
       </header>
 
       <section className="mb-30 px-4" aria-labelledby="gallery-heading">
