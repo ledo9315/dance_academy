@@ -21,8 +21,7 @@ export function CTASection({ className }: Props) {
 
       <p className="text-center text-text text-sm sm:text-base font-sans max-w-[680px] px-4 sm:px-0 mb-6 sm:mb-8 leading-relaxed">
         Join Angela&apos;s Dance Academy and discover ballet, jazz,
-        contemporary, and more in a friendly, professional environment. Book a
-        free trial or contact us for details.
+        contemporary, and more in a friendly, professional environment.
       </p>
 
       <div className="flex items-center justify-center w-full sm:w-auto px-4 sm:px-0">
