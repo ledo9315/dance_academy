@@ -44,7 +44,7 @@ const ContactPage = () => {
       name: "Angela's Dance Academy",
       url: "https://angelasdanceacademy.com",
       telephone: "+1-239-215-2888",
-      email: "info@angelasdanceacademy.com",
+      email: "angelasdanceacademy@gmail.com",
       address: {
         "@type": "PostalAddress",
         streetAddress: "12840 Tamiami Trail North Suite 300",
