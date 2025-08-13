@@ -112,7 +112,7 @@ export function TestimonialSection() {
         </div>
 
         <h2 className="text-2xl sm:text-3xl font-light mb-4 sm:mb-6">
-          What Our Students Say
+          What Our Customers Say
         </h2>
         <div className="border border-accent w-15 mx-auto mb-6 sm:mb-8" />
 
