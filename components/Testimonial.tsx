@@ -1,5 +1,3 @@
-"use client";
-
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Star, ChevronRight } from "lucide-react";
 import { Card } from "./ui/card";
@@ -134,7 +132,7 @@ export function TestimonialSection() {
       </header>
 
       <div className="relative overflow-hidden w-full">
-        <div className="flex gap-4 animate-scroll">
+        <div className="flex gap-4 animate-scroll hover:pause">
           {duplicatedTestimonials.map((testimonial, index) => (
             <Card
               key={`${testimonial.id}-${index}`}
@@ -177,25 +175,6 @@ export function TestimonialSection() {
           ))}
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes scroll {
-          0% {
-            transform: translateX(0);
-          }
-          100% {
-            transform: translateX(-50%);
-          }
-        }
-
-        .animate-scroll {
-          animation: scroll 30s linear infinite;
-        }
-
-        .animate-scroll:hover {
-          animation-play-state: paused;
-        }
-      `}</style>
     </section>
   );
 }
