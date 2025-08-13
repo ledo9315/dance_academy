@@ -1,5 +1,6 @@
 "use client";
 
+import CTASection from "@/components/CTA";
 import { Hero } from "@/components/Hero";
 import LinkComponent from "@/components/ui/link";
 import { Phone, Star } from "lucide-react";
@@ -157,17 +158,6 @@ const Page = () => {
               </article>
             ))}
           </div>
-        </section>
-        <section className="pt-12 sm:pt-16 max-w-3xl mx-auto mb-24 sm:mb-32 text-center flex flex-col items-center px-4 sm:px-0">
-          <h3 className="text-xl sm:text-2xl mb-4">Ready to Start Dancing?</h3>
-          <p className="text-text font-sans mb-6 text-sm sm:text-base">
-            Contact us today to learn more about our programs and visit our
-            studio.
-          </p>
-          <LinkComponent href="/contact" variant="default-button">
-            <Phone width={20} height={20} className="mr-2" />
-            Contact Us
-          </LinkComponent>
         </section>
       </main>
     </>

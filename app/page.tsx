@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { Play, ExternalLink } from "lucide-react";
 import Script from "next/script";
 import { TestimonialSection } from "@/components/Testimonial";
+import { CTASection } from "@/components/CTA";
 
 const Page = () => {
   const [showVideo, setShowVideo] = useState(false);
@@ -163,7 +164,7 @@ const Page = () => {
               </div>
 
               <a
-                href="https://www.youtube.com/watch?v=V6akGrZTiDU"
+                href="https://www.youtube.com/watch?v=zKYBXGQuFpA"
                 className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-accent text-white text-xs sm:text-sm font-sans hover:bg-accent-dark transition-colors active:translate-y-0.5"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -184,7 +185,7 @@ const Page = () => {
                 width="800"
                 height="450"
                 loading="lazy"
-                src="https://www.youtube.com/embed/V6akGrZTiDU"
+                src="https://www.youtube.com/embed/zKYBXGQuFpA"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
                 className="w-full aspect-video flex md:absolute top-0 left-0"
@@ -194,6 +195,8 @@ const Page = () => {
         </section>
 
         <TestimonialSection />
+
+        <CTASection />
       </main>
     </>
   );
