@@ -66,27 +66,23 @@ const ContactPage = () => {
     setIsSubmitting(true);
     setSubmitStatus(null);
     try {
-      const response = await fetch(
-        "https://formsubmit.co/71c4b48f33310a673547ab96e2502c02",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name: data.name,
-            email: data.email,
-            phone: data.phone,
-            subject: data.subject,
-            message: data.message,
-            _subject: "New inquiry from Angela's Dance Academy Website",
-            _template: "table",
-            _next: "https://angelasdanceacademy.com/thank-you.html",
-            _captcha: "true",
-          }),
-        }
-      );
-      if (response.ok) {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+          subject: data.subject,
+          message: data.message,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
         setSubmitStatus("success");
         reset();
       } else {
