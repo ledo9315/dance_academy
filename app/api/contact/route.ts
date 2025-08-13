@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
     // Send email to the dance academy
     await resend.emails.send({
       from: "Angela's Dance Academy <noreply@angelasdanceacademy.com>",
-      to: ["leonid.domagalsky@gmail.com"],
+      to: ["info@angelasdanceacademy.com"],
       subject: `New Inquiry: ${subject} - ${name}`,
       html: `
         <h2>New Inquiry from Website</h2>
