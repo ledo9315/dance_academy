@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Analytics } from "@vercel/analytics/next";
+import { TrackingProvider } from "@/components/TrackingProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -129,13 +130,15 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="mx-auto max-w-[1100px] border-0 xl:border-2 border-accent md:my-20">
-          <div className="w-full flex flex-col min-h-screen">
-            <Header />
-            {children}
-            <Footer />
+        <TrackingProvider>
+          <div className="mx-auto max-w-[1100px] border-0 xl:border-2 border-accent md:my-20">
+            <div className="w-full flex flex-col min-h-screen">
+              <Header />
+              {children}
+              <Footer />
+            </div>
           </div>
-        </div>
+        </TrackingProvider>
         <Analytics />
       </body>
     </html>
