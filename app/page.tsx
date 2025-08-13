@@ -4,6 +4,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { Play, ExternalLink } from "lucide-react";
 import Script from "next/script";
+import { TestimonialSection } from "@/components/Testimonial";
 
 const Page = () => {
   const [showVideo, setShowVideo] = useState(false);
@@ -191,6 +192,8 @@ const Page = () => {
             )}
           </div>
         </section>
+
+        <TestimonialSection />
       </main>
     </>
   );
