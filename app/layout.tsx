@@ -25,6 +25,8 @@ export const metadata: Metadata = {
   description:
     "Call (239) 215-2888. Mon–Fri 4–8pm. Visit us at 12840 Tamiami Trail N, Suite 300, Naples, FL 34110.",
   keywords: [
+    "naples dance classes",
+    "naples fl dance",
     "dance school Naples FL",
     "dance academy Naples",
     "ballet classes Naples",
@@ -33,7 +35,7 @@ export const metadata: Metadata = {
     "contemporary dance Naples",
     "children dance classes Naples",
     "teen dance classes Naples",
-    "dance lessons Naples",
+    "dance lessons Naples fl",
     "dance performances Naples",
     "dance competitions Naples",
     "dance studio Naples",
