@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Analytics } from "@vercel/analytics/next";
 import { TrackingProvider } from "@/components/TrackingProvider";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,58 +19,25 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default:
-      "Angela's Dance Academy - #1 Dance School in Naples, Florida | Ballet, Jazz, Contemporary",
+    default: "Angela's Dance Academy – Dance School in Naples, FL",
     template: "%s | Angela's Dance Academy Naples, FL",
   },
   description:
-    "Angela's Dance Academy is the premier dance school in Naples, Florida. Offering ballet, jazz, contemporary, and hip hop classes for ages 3-18. 4.9★ rated with 28+ reviews. Located at 12840 Tamiami Trail N Suite 300.",
+    "Call (239) 215-2888. Mon–Fri 4–8pm. Visit us at 12840 Tamiami Trail N, Suite 300, Naples, FL 34110.",
   keywords: [
-    "dance classes Naples FL",
     "dance school Naples FL",
-    "dance academy Naples FL",
-    "dance studio Naples FL",
-    "dance lessons Naples FL",
-    "dance classes Naples FL",
-    "dance school Naples FL",
-    "dance academy Naples FL",
-    "naples dance",
-    "naples dance studio",
-    "naples dance school",
-    "naples dance academy",
-    "naples dance lessons",
-    "naples dance classes",
-    "naples dance school",
-    "naples dance academy",
-    "ballet classes Naples Florida",
-    "jazz dance classes Naples",
-    "dance academy Naples Florida",
-    "children dance classes Naples",
-    "dance lessons Naples FL",
-    "competitive dance team Naples",
-    "dance school Naples Florida",
-    "ballet lessons Naples",
+    "dance academy Naples",
+    "ballet classes Naples",
     "jazz dance Naples",
+    "hip hop dance Naples",
     "contemporary dance Naples",
-    "hip hop dance classes Naples",
-    "dance training Naples FL",
-    "dance instructor Naples",
-    "dance performance Naples",
-    "dance competition Naples Florida",
-    "dance recital Naples",
-    "dance costumes Naples",
-    "dance education Naples FL",
-    "toddler dance classes Naples",
-    "preschool dance Naples",
+    "children dance classes Naples",
     "teen dance classes Naples",
-    "adult dance classes Naples",
-    "dance fitness Naples",
-    "dance studios Naples",
-    "dance technique Naples",
-    "dance choreography Naples",
-    "dance studio near me Naples",
-    "best dance school Naples",
-    "top dance academy Naples Florida",
+    "dance lessons Naples",
+    "dance performances Naples",
+    "dance competitions Naples",
+    "dance studio Naples",
+    "dance training Naples FL",
   ],
   authors: [{ name: "Angela's Dance Academy" }],
   creator: "Angela's Dance Academy",
@@ -87,9 +55,9 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://angelasdanceacademy.com",
-    title: "Angela's Dance Academy - #1 Dance School in Naples, Florida",
+    title: "Angela's Dance Academy – Dance School in Naples, FL",
     description:
-      "Premier dance academy in Naples, Florida with 4.9★ rating. Professional ballet, jazz, arco contemporary & hip hop classes for ages 3-18. Visit us at 12840 Tamiami Trail N Suite 300.",
+      "Call (239) 215-2888. Mon–Fri 4–8pm. 12840 Tamiami Trail N, Suite 300, Naples, FL 34110.",
     siteName: "Angela's Dance Academy",
     images: [
       {
@@ -102,9 +70,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Angela's Dance Academy - #1 Dance School Naples, FL",
+    title: "Angela's Dance Academy – Dance School in Naples, FL",
     description:
-      "4.9★ rated dance academy in Naples, Florida. Professional instruction for all ages. Ballet, jazz, contemporary & hip hop classes.",
+      "Call (239) 215-2888. Mon–Fri 4–8pm. 12840 Tamiami Trail N, Suite 300, Naples, FL 34110.",
     images: ["/logo.jpg"],
   },
   robots: {
@@ -130,6 +98,58 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Script
+          id="site-navigation-ldjson"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "DanceSchool",
+                  name: "Angela's Dance Academy",
+                  address: {
+                    "@type": "PostalAddress",
+                    streetAddress: "12840 Tamiami Trail N, Suite 300",
+                    addressLocality: "Naples",
+                    addressRegion: "FL",
+                    postalCode: "34110",
+                    addressCountry: "US",
+                  },
+                  telephone: "(239) 215-2888",
+                  url: "https://angelasdanceacademy.com",
+                  openingHours: "Mo-Fr 16:00-20:00",
+                },
+                {
+                  "@type": "WebSite",
+                  name: "Angela's Dance Academy",
+                  url: "https://angelasdanceacademy.com",
+                },
+                {
+                  "@type": "SiteNavigationElement",
+                  name: "Schedule",
+                  url: "https://angelasdanceacademy.com/schedule",
+                },
+                {
+                  "@type": "SiteNavigationElement",
+                  name: "Classes",
+                  url: "https://angelasdanceacademy.com/classes",
+                },
+                {
+                  "@type": "SiteNavigationElement",
+                  name: "Contact",
+                  url: "https://angelasdanceacademy.com/contact",
+                },
+                {
+                  "@type": "SiteNavigationElement",
+                  name: "Gallery",
+                  url: "https://angelasdanceacademy.com/album",
+                },
+              ],
+            }),
+          }}
+        />
+
         <TrackingProvider>
           <div className="mx-auto max-w-[1100px] border-0 xl:border-2 border-accent md:my-20">
             <div className="w-full flex flex-col min-h-screen">

@@ -107,7 +107,7 @@ export function TestimonialSection() {
             rel="noopener noreferrer"
             className="text-sm font-sans text-text hover:text-accent transition-colors duration-200"
           >
-            Google Rating: 4.9 stars from 28+ reviews
+            Google Rating: 4.9 stars from 30+ reviews
           </a>
         </div>
 
