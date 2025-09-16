@@ -109,6 +109,7 @@ export default function RootLayout({
               "@graph": [
                 {
                   "@type": "DanceSchool",
+                  "@id": "https://angelasdanceacademy.com/#dance-school",
                   name: "Angela's Dance Academy",
                   address: {
                     "@type": "PostalAddress",

@@ -17,6 +17,7 @@ const Page = () => {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "DanceSchool",
+    "@id": "https://angelasdanceacademy.com/#dance-school",
     name: "Angela's Dance Academy",
     description:
       "Premier dance academy in Naples, Florida offering ballet, jazz, contemporary, and more. Professional dance instruction for all ages and skill levels.",
