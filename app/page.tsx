@@ -16,7 +16,7 @@ const Page = () => {
 
   const structuredData = {
     "@context": "https://schema.org",
-    "@type": "DanceSchool",
+    "@type": ["DanceSchool", "LocalBusiness"],
     "@id": "https://angelasdanceacademy.com/#dance-school",
     name: "Angela's Dance Academy",
     description:

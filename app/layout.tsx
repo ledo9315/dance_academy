@@ -111,13 +111,13 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@graph": [
                 {
-                  "@type": "DanceSchool",
+                  "@type": ["DanceSchool", "LocalBusiness"],
                   "@id": "https://angelasdanceacademy.com/#dance-school",
                   name: "Angela's Dance Academy",
                   address: {
                     "@type": "PostalAddress",
                     streetAddress: "12840 Tamiami Trail N, Suite 300",
-                    addressLocality: "naples",
+                    addressLocality: "Naples",
                     addressRegion: "FL",
                     postalCode: "34110",
                     addressCountry: "US",
