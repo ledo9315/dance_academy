@@ -94,7 +94,7 @@ const Page = () => {
       />
       <main className="flex-1 flex flex-col items-center justify-center gap-y-6 pt-6 sm:pt-10 px-4 sm:px-6">
         <h1 className="sr-only">
-          <h1>Angela's Dance Academy Naples</h1>
+          Angela's Dance Academy - Premier Dance School in Naples, FL
         </h1>
         <section className="w-full max-w-[800px] flex flex-col items-center mb-12 sm:mb-16">
           <figure className="mb-12 sm:mb-16">
