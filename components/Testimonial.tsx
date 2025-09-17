@@ -153,9 +153,9 @@ export function TestimonialSection() {
                 </Avatar>
 
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-sans font-medium text-foreground text-sm">
+                  <p className="font-sans font-medium text-foreground text-sm">
                     {testimonial.name}
-                  </h3>
+                  </p>
                   <p className="text-text text-xs font-sans">
                     {testimonial.role}
                   </p>
