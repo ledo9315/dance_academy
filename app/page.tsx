@@ -93,7 +93,8 @@ const Page = () => {
       />
       <main className="flex-1 flex flex-col items-center justify-center gap-y-6 pt-6 sm:pt-10 px-4 sm:px-6">
         <h1 className="sr-only">
-          Angela's Dance Academy – Professional Dance Studio in Naples, FL
+          Angela's Dance Academy | Dance Classes for Kids & Teens 3–18 in
+          Naples, FL
         </h1>
         <section className="w-full max-w-[800px] flex flex-col items-center mb-12 sm:mb-16">
           <figure className="mb-12 sm:mb-16">
@@ -115,13 +116,11 @@ const Page = () => {
 
           <article className="text-center text-text space-y-6 sm:space-y-10 font-sans px-4 sm:px-0">
             <p className="text-sm sm:text-base leading-relaxed">
-              For over 20 years, we at Angela's Dance Academy have aimed to
-              create more than just a dance studio for our students. We strive
-              for an environment which flourishes talent, drive and creativity.
-              We offer a variety of dance styles which in turn creates many
-              well-rounded dancers. Some of the styles we offer at ADA include
-              Ballet, Jazz, Hip Hop, Street Jazz, Lyrical, Technique as well as
-              extensive stretching and conditioning.
+              For over 20 years, Angela's Dance Academy in Naples, FL has
+              offered professional dance classes for kids and teens ages 3–18.
+              Our programs include Ballet, Jazz, Hip Hop, Lyrical, Contemporary,
+              and Technique classes, along with stretching and conditioning, to
+              help young dancers develop skills, confidence, and creativity.
             </p>
 
             <p className="text-sm sm:text-base leading-relaxed">

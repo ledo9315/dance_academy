@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Dance Classes & Programs - Angela's Dance Academy Naples, Florida",
@@ -36,8 +36,6 @@ export const metadata: Metadata = {
 
 export default function ClassesLayout({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+}: Readonly<{ children: React.ReactNode }>) {
   return children;
 }
