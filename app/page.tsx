@@ -101,7 +101,7 @@ const Page = () => {
           <figure className="mb-12 sm:mb-16">
             <Image
               src="/home_hero.jpg"
-              alt="About our Academy"
+              alt="In a bright dance studio with smooth white floors and light gray walls, six young dancers from Angela’s Dance Academy are captured mid-pose. Three dancers sit on the floor in front, each in a split position with one arm raised gracefully upward. Behind them, three more dancers stand in a line, each balancing on one leg while lifting the other leg high into the air in an elegant extension. All of the dancers are dressed in matching black leotards and beige dance shoes, emphasizing uniformity and focus. On the back wall, the teal-colored logo of Angela’s Dance Academy is prominently displayed, adding identity to the space. The atmosphere of the image conveys discipline, creativity, and pride in the dancers’ training."
               width={800}
               height={530}
               className="w-full h-auto"
