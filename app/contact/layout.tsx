@@ -22,6 +22,9 @@ export const metadata: Metadata = {
     "dance academy inquiry Naples",
     "dance school information Naples",
   ],
+  alternates: {
+    canonical: "/contact",
+  },
   openGraph: {
     title: "Contact Us - Angela's Dance Academy Naples, Florida",
     description:

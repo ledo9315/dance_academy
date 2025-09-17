@@ -11,6 +11,9 @@ export const metadata: Metadata = {
     "jazz hip hop teens Naples",
     "contemporary dance Naples Florida",
   ],
+  alternates: {
+    canonical: "/classes",
+  },
   openGraph: {
     title: "Dance Classes (Ages 3–18) – Angela's Dance Academy Naples, Florida",
     description:

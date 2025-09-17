@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     template: "%s | Angela's Dance Academy Naples, FL",
   },
   description:
-    "Join Angela's Dance Academy in Naples, FL! Dance classes for kids & teens ages 3–18 in ballet, jazz, hip-hop & more. Experienced instructors, fun programs—enroll today!",
+    "Join Angela's Dance Academy in Naples, FL! Dance classes for kids & teens ages 3–18 in ballet, jazz, hip-hop & more. Experienced instructors—enroll today!",
   keywords: [
     "naples dance classes",
     "dance lessons naples fl",
@@ -60,6 +60,9 @@ export const metadata: Metadata = {
     telephone: false,
   },
   metadataBase: new URL("https://angelasdanceacademy.com"),
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
