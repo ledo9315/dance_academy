@@ -46,6 +46,9 @@ const GalleryPage = () => {
   if (isLoading) {
     return (
       <main className="container">
+        <h1 className="sr-only">
+          Gallery – Dance Classes for Kids & Teens 3–18 in Naples, FL
+        </h1>
         <Hero
           imgSrc="/gallery-background.jpg"
           title="Gallery"
@@ -60,6 +63,9 @@ const GalleryPage = () => {
 
   return (
     <main className="container">
+      <h1 className="sr-only">
+        Gallery – Dance Classes for Kids & Teens 3–18 in Naples, FL
+      </h1>
       <Hero
         imgSrc="/gallery-background.jpg"
         title="Gallery"

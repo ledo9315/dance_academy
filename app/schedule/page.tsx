@@ -108,6 +108,9 @@ export default function SchedulePage() {
   if (isLoading) {
     return (
       <main className="flex-1 flex flex-col items-center justify-center gap-y-6 pt-6 sm:pt-10 px-4 sm:px-6">
+        <h1 className="sr-only">
+          Class Schedule – Dance Classes for Kids & Teens 3–18 in Naples, FL
+        </h1>
         <div className="w-full max-w-[800px] flex flex-col items-center">
           <p className="text-text font-sans">Loading schedule...</p>
         </div>
@@ -117,6 +120,9 @@ export default function SchedulePage() {
 
   return (
     <main className="container flex-1 flex flex-col items-center justify-center gap-y-6 pt-6 sm:pt-10 px-4 sm:px-6">
+      <h1 className="sr-only">
+        Class Schedule – Dance Classes for Kids & Teens 3–18 in Naples, FL
+      </h1>
       <Hero imgSrc="/6.jpg" title="Schedule" className="mb-24 px-4 md:px-0" />
       <section className="w-full max-w-[800px] flex flex-col items-center mb-12 sm:mb-16">
         <header className="text-center mb-12 sm:mb-16">

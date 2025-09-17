@@ -1,35 +1,20 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Dance Classes & Programs - Angela's Dance Academy Naples, Florida",
+  title:
+    "Dance Classes for Kids & Teens 3–18 – Programs | Angela's Dance Academy",
   description:
-    "Discover our comprehensive dance programs for all ages in Naples, Florida. From pre-dance for toddlers to competitive teams, we offer ballet, jazz, contemporary, and hip hop classes. 4.9★ rated dance academy.",
+    "Dance classes for kids & teens ages 3–18 in Naples, FL. Ballet, Jazz, Hip Hop, Contemporary, Technique. Professional instructors and supportive programs.",
   keywords: [
-    "dance classes Naples FL",
-    "ballet classes Naples Florida",
-    "jazz dance classes Naples",
-    "children dance classes Naples",
-    "competitive dance team Naples",
-    "dance programs Naples Florida",
-    "dance lessons Naples",
-    "pre-dance program Naples",
-    "toddler dance classes Naples",
-    "teen dance classes Naples",
-    "dance training Naples FL",
-    "ballet lessons Naples",
-    "jazz dance Naples",
-    "contemporary dance Naples",
-    "hip hop dance classes Naples",
-    "dance academy programs Naples",
-    "dance studio classes Naples Florida",
-    "dance education Naples",
-    "dance technique Naples",
-    "dance performance Naples",
+    "dance classes kids teens Naples FL",
+    "ballet classes kids Naples",
+    "jazz hip hop teens Naples",
+    "contemporary dance Naples Florida",
   ],
   openGraph: {
-    title: "Dance Classes & Programs - Angela's Dance Academy Naples, Florida",
+    title: "Dance Classes (Ages 3–18) – Angela's Dance Academy Naples, Florida",
     description:
-      "Comprehensive dance programs for all ages in Naples, Florida. From pre-dance to competitive teams. 4.9★ rated dance academy.",
+      "Programs for kids & teens ages 3–18: Ballet, Jazz, Hip Hop, Contemporary, Technique.",
     images: ["/classes-3.jpg"],
   },
 };

@@ -1,9 +1,8 @@
 "use client";
 
-import CTASection from "@/components/CTA";
+import { Faq } from "@/components/FAQ";
 import { Hero } from "@/components/Hero";
-import LinkComponent from "@/components/ui/link";
-import { Phone, Star } from "lucide-react";
+import { Star } from "lucide-react";
 import Image from "next/image";
 import Script from "next/script";
 

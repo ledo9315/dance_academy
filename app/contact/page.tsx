@@ -103,6 +103,9 @@ const ContactPage = () => {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
       <main className="min-h-screen container">
+        <h1 className="sr-only">
+          Contact – Dance Classes for Kids & Teens 3–18 in Naples, FL
+        </h1>
         {/* Hero Section */}
         <Hero
           imgSrc="/contact-img.jpg"

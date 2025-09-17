@@ -6,6 +6,7 @@ import { Play, ExternalLink } from "lucide-react";
 import Script from "next/script";
 import { TestimonialSection } from "@/components/Testimonial";
 import { CTASection } from "@/components/CTA";
+import { Faq } from "@/components/FAQ";
 
 const Page = () => {
   const [showVideo, setShowVideo] = useState(false);
@@ -195,7 +196,7 @@ const Page = () => {
         </section>
 
         <TestimonialSection />
-
+        <Faq />
         <CTASection />
       </main>
     </>
