@@ -8,3 +8,9 @@ export const metadata: Metadata = {
     url: "https://angelasdanceacademy.com/album",
   },
 };
+
+export default function AlbumLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
+  return children;
+}
