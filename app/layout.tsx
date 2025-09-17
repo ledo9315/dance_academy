@@ -19,7 +19,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Angela's Dance Academy | Dance Classes for Kids & Teens 3–18",
+    default: "Dance Classes for Kids & Teens 3-18 | Angela's Dance Academy",
     template: "%s | Angela's Dance Academy Naples, FL",
   },
   description:
@@ -65,11 +65,8 @@ export const metadata: Metadata = {
     "jazz",
     "dance classes",
     "premier dance studio",
-    "ballroom",
     "students",
     "joy of dance",
-    "salsa",
-    "waltz",
     "dance journey",
     "private dance lessons naples fl",
     "premier dance studio naples fl",
