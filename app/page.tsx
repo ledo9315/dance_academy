@@ -94,8 +94,8 @@ const Page = () => {
       />
       <main className="flex-1 flex flex-col items-center justify-center gap-y-6 pt-6 sm:pt-10 px-4 sm:px-6">
         <h1 className="sr-only">
-          Angela's Dance Academy | Dance Classes for Kids & Teens 3–18 in
-          Naples, FL
+          Angela's Dance Academy | Premier Dance School Naples, FL -
+          Professional Dance Classes & Private Lessons
         </h1>
         <section className="w-full max-w-[800px] flex flex-col items-center mb-12 sm:mb-16">
           <figure className="mb-12 sm:mb-16">
@@ -110,7 +110,7 @@ const Page = () => {
 
           <header className="text-center">
             <h2 className="text-2xl sm:text-3xl font-light mb-4 sm:mb-6">
-              About Our Academy
+              About Our Dance Studio
             </h2>
             <div className="border border-accent w-15 mx-auto mb-6 sm:mb-8" />
           </header>
@@ -140,7 +140,7 @@ const Page = () => {
 
         <section className="mb-12 sm:mb-16 w-full max-w-[800px] px-4 sm:px-0">
           <h2 className="text-xl sm:text-2xl font-light text-center mb-10 sm:mb-14">
-            See Our Academy in Action
+            See Our Dance School in Action
           </h2>
 
           <div className="relative mb-12 sm:mb-16">
@@ -154,12 +154,13 @@ const Page = () => {
                     className="sm:w-[60px] sm:h-[60px] text-accent"
                   />
                   <h3 className="text-lg sm:text-xl text-gray-800 mb-2 sm:mb-4">
-                    Watch Our Academy Video
+                    Watch Our Premier Dance Studio Video
                   </h3>
                 </div>
                 <div className="text-text font-sans mb-4 sm:mb-6">
                   <p className="text-gray-600 text-sm sm:text-base">
-                    Experience the energy and passion of our dance academy
+                    Experience the energy and passion of our Naples dance studio
+                    where students discover the joy of dance
                   </p>
                 </div>
               </div>
