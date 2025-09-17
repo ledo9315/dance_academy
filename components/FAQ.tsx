@@ -54,24 +54,12 @@ const faqItems = [
   },
   {
     id: "faq-6",
-    question: "How much do dance classes cost per month?",
-    answer:
-      "Tuition depends on class count and level. Contact us for current pricing and multi-class options; we keep plans flexible for families.",
-  },
-  {
-    id: "faq-7",
-    question: "What should my child wear to class?",
-    answer:
-      "Comfortable fitted attire that allows movement: leotard/tights for Ballet; athletic wear for Jazz/Hip Hop/Contemporary. Hair secured; clean dance shoes per style.",
-  },
-  {
-    id: "faq-8",
     question: "How do performances and competitions work?",
     answer:
       "We offer studio showcases and optional competitions via our team program. Dancers gain stage experience, confidence and teamwork in a supportive environment.",
   },
   {
-    id: "faq-9",
+    id: "faq-7",
     question: "How do you place students in the right level?",
     answer:
       "Student placement is based on age, previous experience and current technique level. Our qualified instructors continuously monitor progress and may recommend additional styles or levels to ensure steady growth.",
