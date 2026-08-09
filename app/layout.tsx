@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Analytics } from "@vercel/analytics/next";
 import { TrackingProvider } from "@/components/TrackingProvider";
+import { ConsentBanner } from "@/components/ConsentBanner";
 import Script from "next/script";
 
 const geistSans = Geist({
@@ -195,6 +196,7 @@ export default function RootLayout({
             </div>
           </div>
         </TrackingProvider>
+        <ConsentBanner />
         <Analytics />
       </body>
     </html>
