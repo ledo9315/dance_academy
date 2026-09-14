@@ -1,4 +1,6 @@
-import { MetadataRoute } from "next";
+import type { MetadataRoute } from "next";
+
+import { site } from "@/lib/site";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -7,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/admin/", "/api/", "/login"],
     },
-    sitemap: "https://angelasdanceacademy.com/sitemap.xml",
+    sitemap: new URL("/sitemap.xml", site.url).toString(),
   };
 }

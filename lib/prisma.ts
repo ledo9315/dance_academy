@@ -1,14 +1,27 @@
-import { PrismaClient } from "./generated/prisma";
+import "server-only";
 
-let prisma: PrismaClient;
+import { PrismaPg } from "@prisma/adapter-pg";
 
-if (process.env.NODE_ENV === "production") {
-  prisma = new PrismaClient();
-} else {
-  if (!(global as any).prisma) {
-    (global as any).prisma = new PrismaClient();
-  }
-  prisma = (global as any).prisma;
+import { PrismaClient } from "@/lib/generated/prisma/client";
+import { env } from "@/lib/env";
+
+const createPrismaClient = () =>
+  new PrismaClient({
+    adapter: new PrismaPg({ connectionString: env.DATABASE_URL }),
+    log: env.NODE_ENV === "development" ? ["warn", "error"] : ["error"],
+  });
+
+/**
+ * Next.js clears the module registry on every hot reload, which would open a new
+ * pool of database connections each time. Caching the client on `globalThis`
+ * keeps exactly one instance alive in development.
+ */
+const globalForPrisma = globalThis as unknown as {
+  prisma?: ReturnType<typeof createPrismaClient>;
+};
+
+export const prisma = globalForPrisma.prisma ?? createPrismaClient();
+
+if (env.NODE_ENV !== "production") {
+  globalForPrisma.prisma = prisma;
 }
-
-export default prisma;

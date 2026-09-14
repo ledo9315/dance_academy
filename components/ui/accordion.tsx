@@ -13,10 +13,7 @@ const AccordionItem = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <AccordionPrimitive.Item
     ref={ref}
-    className={cn(
-      "border-b border-border transition-colors duration-200",
-      className
-    )}
+    className={cn("border-b border-border transition-colors duration-200", className)}
     {...props}
   />
 ));
@@ -30,8 +27,8 @@ const AccordionTrigger = React.forwardRef<
     <AccordionPrimitive.Trigger
       ref={ref}
       className={cn(
-        "group flex flex-1 items-center justify-between py-4 text-left font-gfs text-base sm:text-lg transition-all duration-200 hover:text-accent focus:outline-hidden",
-        className
+        "group flex flex-1 items-center justify-between py-4 text-left font-gfs text-base transition-all duration-200 hover:text-accent focus:outline-hidden sm:text-lg",
+        className,
       )}
       {...props}
     >
@@ -55,13 +52,11 @@ const AccordionContent = React.forwardRef<
     ref={ref}
     className={cn(
       "overflow-hidden text-text transition-all duration-300 ease-in-out data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down",
-      className
+      className,
     )}
     {...props}
   >
-    <div className="pb-4 pt-0 font-sans text-sm sm:text-base leading-relaxed">
-      {children}
-    </div>
+    <div className="pt-0 pb-4 font-sans text-sm leading-relaxed sm:text-base">{children}</div>
   </AccordionPrimitive.Content>
 ));
 AccordionContent.displayName = AccordionPrimitive.Content.displayName;

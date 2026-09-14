@@ -15,10 +15,8 @@ const buttonVariants = cva(
           "font-sans text-sm text-red-600 hover:text-white border-2 border-red-600 hover:bg-red-600 rounded-none cursor-pointer active:translate-y-0.5 active:border-red-600 visited:border-red-600",
         outline:
           "font-sans text-sm text-accent hover:text-white border-2 border-accent hover:bg-accent rounded-none cursor-pointer active:translate-y-0.5",
-        secondary:
-          "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
-        ghost:
-          "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
+        secondary: "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
+        ghost: "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
@@ -33,7 +31,7 @@ const buttonVariants = cva(
       variant: "default",
       size: "default",
     },
-  }
+  },
 );
 
 function Button({
