@@ -1,11 +1,12 @@
 import Image from "next/image";
+import { ExternalLink, Play } from "lucide-react";
 
 import { CtaSection } from "@/components/cta-section";
 import { FaqSection } from "@/components/faq-section";
 import { SectionHeading } from "@/components/section-heading";
 import { StructuredData } from "@/components/structured-data";
 import { TestimonialsSection } from "@/components/testimonials-section";
-import { YouTubeEmbed } from "@/components/youtube-embed";
+import { ClientOnly } from "@/components/client-only";
 import { FAQ_ITEMS } from "@/content/faq";
 import { AGGREGATE_RATING } from "@/content/testimonials";
 import { site } from "@/lib/site";
@@ -74,7 +75,7 @@ export default function HomePage() {
             />
           </figure>
 
-          <SectionHeading title="About Our Dance Studio" />
+          <SectionHeading title="About Our Dance Studio" headingClassName="font-light" />
 
           <div className="space-y-6 px-4 text-center font-sans text-text sm:space-y-10 sm:px-0">
             <p className="text-sm leading-relaxed sm:text-base">
@@ -99,7 +100,54 @@ export default function HomePage() {
           <h2 className="mb-10 text-center text-xl font-light sm:mb-14 sm:text-2xl">
             See Our Dance School in Action
           </h2>
-          <YouTubeEmbed videoId={site.youtubeVideoId} title={`${site.name} studio video`} />
+
+          <div className="relative mb-12 sm:mb-16">
+            {/* Fallback for browsers without JavaScript */}
+            <div className="flex aspect-video flex-col items-center justify-center bg-gray-50 p-4 text-center sm:p-8">
+              <div className="mb-4 sm:mb-6">
+                <div className="flex flex-col items-center space-y-2 sm:space-y-4">
+                  <Play
+                    width={40}
+                    height={40}
+                    className="text-accent sm:h-[60px] sm:w-[60px]"
+                    aria-hidden
+                  />
+                  <h3 className="mb-2 text-lg text-gray-800 sm:mb-4 sm:text-xl">
+                    Watch Our Premier Dance Studio Video
+                  </h3>
+                </div>
+                <div className="mb-4 font-sans text-text sm:mb-6">
+                  <p className="text-sm text-gray-600 sm:text-base">
+                    Experience the energy and passion of our Naples dance studio where students
+                    discover the joy of dance
+                  </p>
+                </div>
+              </div>
+
+              <a
+                href={`https://www.youtube.com/watch?v=${site.youtubeVideoId}`}
+                className="inline-flex items-center bg-accent px-4 py-2 font-sans text-xs text-white transition-colors hover:bg-accent-dark active:translate-y-0.5 sm:px-6 sm:py-3 sm:text-sm"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ExternalLink width={16} height={16} className="mr-2 sm:h-5 sm:w-5" aria-hidden />
+                Watch on YouTube
+              </a>
+            </div>
+
+            <ClientOnly>
+              <iframe
+                title={`${site.name} Video`}
+                width="800"
+                height="450"
+                loading="lazy"
+                src={`https://www.youtube.com/embed/${site.youtubeVideoId}`}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                className="top-0 left-0 flex aspect-video w-full md:absolute"
+              />
+            </ClientOnly>
+          </div>
         </section>
 
         <TestimonialsSection />

@@ -39,40 +39,40 @@ export default async function GalleryPage() {
         className="mb-24"
       />
 
-      <SectionHeading
-        title="Dance Memories"
-        description="Explore our collection of performances, competitions, studio moments, and special events from Angela's Dance Academy."
-        className="mx-auto mb-16 max-w-3xl px-4 sm:mb-24"
-      />
+      <SectionHeading title="Dance Memories" className="mx-auto mb-16 max-w-3xl px-4 sm:mb-24">
+        <p className="text-center font-sans text-sm text-text sm:text-base">
+          Explore our collection of performances, competitions, studio moments, and special events
+          from Angela&apos;s Dance Academy.
+        </p>
+      </SectionHeading>
 
-      <section aria-labelledby="albums" className="mb-30 px-4 font-sans">
-        <h2 id="albums" className="sr-only">
-          Albums
+      <section aria-labelledby="gallery" className="mb-30 px-4 font-sans">
+        <h2 id="gallery" className="sr-only">
+          Gallery Overview
         </h2>
 
-        {albums.length === 0 ? (
-          <p className="text-center text-text">New albums are coming soon.</p>
-        ) : (
-          <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-3 lg:gap-12">
-            {albums.map((album) => (
-              <li key={album.id} className="flex flex-col items-center">
-                <Link href={`/album/${album.id}`} className="block w-full">
-                  <Image
-                    src={album.coverImage}
-                    alt={album.title}
-                    width={290}
-                    height={220}
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    className="aspect-[4/3] w-full object-cover"
-                  />
-                  <span className="mt-2 block w-full truncate text-center font-sans text-sm text-gray-700">
-                    {album.title}
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        )}
+        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-3 lg:gap-12">
+          {albums.map((album) => (
+            <li key={album.id} className="flex flex-col items-center">
+              <Link href={`/album/${album.id}`} className="block aspect-[4/3] w-full">
+                <Image
+                  src={album.coverImage}
+                  alt={album.title}
+                  width={290}
+                  height={220}
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  className="h-full w-full object-cover"
+                />
+              </Link>
+              <span
+                className="mt-2 w-full truncate text-center font-sans text-sm text-gray-700"
+                title={album.title}
+              >
+                {album.title}
+              </span>
+            </li>
+          ))}
+        </ul>
       </section>
     </main>
   );

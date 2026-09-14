@@ -21,7 +21,15 @@ export function FaqSection({
   return (
     <section className="mb-16 w-full py-10 sm:mb-24 sm:py-16">
       <div className="container space-y-16">
-        <SectionHeading title={heading} description={description} />
+        <SectionHeading
+          title={heading}
+          className="flex flex-col items-center"
+          headingClassName="font-light"
+        >
+          <p className="max-w-[680px] px-4 font-sans text-sm leading-relaxed text-text sm:px-0 sm:text-base">
+            {description}
+          </p>
+        </SectionHeading>
 
         <Accordion type="single" collapsible className="mx-auto w-full lg:max-w-3xl">
           {items.map((item) => (

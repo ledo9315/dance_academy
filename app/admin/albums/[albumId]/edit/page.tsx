@@ -39,12 +39,7 @@ export default async function EditAlbumPage({ params }: EditAlbumPageProps) {
           <hr className="mt-4 sm:mt-6" />
         </header>
 
-        <AlbumForm
-          action={updateThisAlbum}
-          album={album}
-          submitLabel="Save Changes"
-          pendingLabel="Saving..."
-        />
+        <AlbumForm action={updateThisAlbum} album={album} />
       </section>
     </main>
   );

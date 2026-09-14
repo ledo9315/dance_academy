@@ -5,8 +5,8 @@ export default async function AdminSchedulePage() {
   const entries = await listSchedule();
 
   return (
-    <main className="flex-1 px-4 pb-20 sm:px-6 lg:px-8">
+    <div className="flex-1 p-6">
       <ScheduleManager entries={entries} />
-    </main>
+    </div>
   );
 }

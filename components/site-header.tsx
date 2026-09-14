@@ -29,16 +29,14 @@ export function SiteHeader() {
 
       <MobileNav isOpen={isNavOpen} onClose={() => setIsNavOpen(false)} />
 
-      <Link href="/" aria-label={`${site.name} — home`}>
-        <Image
-          src="/logo.jpg"
-          alt={site.name}
-          className="h-auto w-full max-w-[300px] sm:max-w-[400px] lg:max-w-[470px]"
-          width={470}
-          height={200}
-          priority
-        />
-      </Link>
+      <Image
+        src="/logo.jpg"
+        alt={site.name}
+        className="h-auto w-full max-w-[300px] sm:max-w-[400px] lg:max-w-[470px]"
+        width={470}
+        height={200}
+        priority
+      />
 
       <address className="flex w-full flex-col justify-between px-4 pt-6 text-xs tracking-[1.4px] text-black/50 uppercase not-italic sm:px-0 sm:pt-8 sm:text-sm md:flex-row">
         <p className="mb-2 text-center md:mb-0">{site.address.street}</p>

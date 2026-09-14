@@ -20,7 +20,7 @@ export default function AddAlbumPage() {
           <hr className="mt-4 sm:mt-6" />
         </header>
 
-        <AlbumForm action={createAlbum} submitLabel="Create Album" pendingLabel="Creating..." />
+        <AlbumForm action={createAlbum} />
       </section>
     </main>
   );

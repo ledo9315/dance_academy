@@ -54,9 +54,14 @@ export default function ClassesPage() {
 
         <SectionHeading
           title="Dance Programs for Every Age"
-          description="From our youngest dancers to advanced competitors, Angela's Dance Academy offers comprehensive programs designed to nurture talent, build confidence, and foster a lifelong love of dance."
           className="mx-auto mb-16 max-w-3xl px-4 sm:mb-24 sm:px-0"
-        />
+        >
+          <p className="text-center font-sans text-sm text-text sm:text-base">
+            From our youngest dancers to advanced competitors, Angela&apos;s Dance Academy offers
+            comprehensive programs designed to nurture talent, build confidence, and foster a
+            lifelong love of dance.
+          </p>
+        </SectionHeading>
 
         <section aria-label="Programs" className="border-b border-border">
           <ul className="mb-16 grid grid-cols-1 gap-8 px-4 sm:gap-12 sm:px-0 lg:grid-cols-2 xl:mb-24">

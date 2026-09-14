@@ -34,7 +34,6 @@ const scheduleSchema = z
       .trim()
       .max(100)
       .transform((value) => value || null),
-    isActive: z.boolean(),
   })
   .refine((data) => data.endsAt > data.startsAt, {
     message: "The end time must be after the start time.",
@@ -60,7 +59,6 @@ export async function saveScheduleEntry(
     endsAt: formData.get("endsAt"),
     ageGroup: formData.get("ageGroup"),
     className: formData.get("className") ?? "",
-    isActive: formData.get("isActive") !== null,
   });
 
   if (!parsed.success) {
@@ -74,9 +72,10 @@ export async function saveScheduleEntry(
 
   try {
     if (id) {
+      // `isActive` is not part of the form, so an update leaves it untouched.
       await prisma.schedule.update({ where: { id }, data });
     } else {
-      await prisma.schedule.create({ data });
+      await prisma.schedule.create({ data: { ...data, isActive: true } });
     }
   } catch (error) {
     console.error("Failed to save schedule entry", { id, error });

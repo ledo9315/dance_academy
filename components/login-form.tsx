@@ -1,6 +1,6 @@
 "use client";
 
-import { AlertCircle, ArrowLeft, LoaderCircle, LogIn } from "lucide-react";
+import { AlertCircle, ArrowLeft, CheckCircle, Circle, LogIn } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -19,7 +19,7 @@ const inputClasses = "border-border w-full border-2 px-4 py-3 transition-colors"
 
 export function LoginForm({ redirectTo }: { redirectTo: string }) {
   const router = useRouter();
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [status, setStatus] = useState<{ type: "success" | "error"; message: string } | null>(null);
 
   const {
     register,
@@ -29,17 +29,18 @@ export function LoginForm({ redirectTo }: { redirectTo: string }) {
   } = useForm<LoginFormValues>();
 
   const onSubmit = handleSubmit(async (values) => {
-    setErrorMessage(null);
+    setStatus(null);
 
     const { error } = await authClient.signIn.email(values);
 
     if (error) {
       // Deliberately generic: revealing whether an account exists helps attackers.
-      setErrorMessage("Email or password is incorrect. Please try again.");
+      setStatus({ type: "error", message: "Email or password is incorrect. Please try again." });
       resetField("password");
       return;
     }
 
+    setStatus({ type: "success", message: "Login successful! Redirecting..." });
     router.replace(redirectTo);
     router.refresh();
   });
@@ -89,25 +90,41 @@ export function LoginForm({ redirectTo }: { redirectTo: string }) {
         ) : null}
       </div>
 
-      {errorMessage ? (
+      {status?.type === "error" ? (
         <p
           role="alert"
           className="mb-6 flex items-center gap-2 rounded-md border border-red-200 bg-red-50 p-4"
         >
           <AlertCircle className="h-5 w-5 shrink-0 text-red-600" aria-hidden />
-          <span className="text-sm font-medium text-red-800">{errorMessage}</span>
+          <span className="text-sm font-medium text-red-800">{status.message}</span>
+        </p>
+      ) : null}
+
+      {status?.type === "success" ? (
+        <p
+          role="status"
+          className="mb-6 flex items-center gap-2 rounded-md border border-green-200 bg-green-50 p-4"
+        >
+          <CheckCircle className="h-5 w-5 shrink-0 text-green-600" aria-hidden />
+          <span className="text-sm font-medium text-green-800">{status.message}</span>
         </p>
       ) : null}
 
       <hr className="my-4 sm:my-6" />
 
-      <Button type="submit" size="full" disabled={isSubmitting}>
+      <Button
+        type="submit"
+        size="full"
+        disabled={isSubmitting}
+        aria-label="Sign in to admin dashboard"
+        className="text-sm sm:text-base"
+      >
+        <LogIn className="mr-2 h-4 w-4 sm:h-5 sm:w-5" aria-hidden />
         {isSubmitting ? (
-          <LoaderCircle className="h-4 w-4 animate-spin sm:h-5 sm:w-5" aria-hidden />
+          <Circle className="h-4 w-4 animate-spin sm:h-5 sm:w-5" aria-hidden />
         ) : (
-          <LogIn className="h-4 w-4 sm:h-5 sm:w-5" aria-hidden />
+          <span>Sign In</span>
         )}
-        {isSubmitting ? "Signing in..." : "Sign In"}
       </Button>
 
       <hr className="mt-8 mb-4 sm:mt-12 sm:mb-6" />

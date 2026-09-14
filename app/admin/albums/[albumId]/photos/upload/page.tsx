@@ -28,11 +28,10 @@ export default async function UploadPhotosPage({ params }: UploadPhotosPageProps
   return (
     <main className="container px-4 sm:px-6 lg:px-8">
       <Breadcrumbs
-        className="mb-6 px-4 sm:mb-8 sm:px-0 md:mb-12"
+        className="mb-6 px-4 sm:mb-8 md:mb-12 md:px-0"
         items={[
-          { label: "Album Management", href: "/admin/albums" },
-          { label: album.title, href: `/admin/albums/${album.id}/photos` },
-          { label: "Upload" },
+          { label: "Album Photos", href: `/admin/albums/${album.id}/photos` },
+          { label: "Upload Photos" },
         ]}
       />
 

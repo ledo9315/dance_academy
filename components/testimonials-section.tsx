@@ -38,20 +38,21 @@ export function TestimonialsSection() {
             rel="noopener noreferrer"
             className="font-sans text-sm text-text transition-colors duration-200 hover:text-accent"
           >
-            Google rating: {AGGREGATE_RATING.value} stars from {AGGREGATE_RATING.count}+ reviews
+            Google Rating: {AGGREGATE_RATING.value} stars from {AGGREGATE_RATING.count}+ reviews
           </a>
         </p>
 
-        <SectionHeading
-          title="What Our Customers Say"
-          description="Join a community of dancers, from beginners to Broadway dreamers"
-        />
+        <SectionHeading title="What Our Customers Say" headingClassName="font-light">
+          <p className="mb-6 font-sans text-sm text-text sm:mb-8 sm:text-base">
+            Join a community of dancers, from beginners to Broadway dreamers
+          </p>
+        </SectionHeading>
 
         <a
           href={site.googleReviewsUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-6 inline-flex items-center gap-2 font-sans text-sm text-accent transition-colors duration-200 hover:text-accent-dark"
+          className="inline-flex items-center gap-2 font-sans text-sm text-accent transition-colors duration-200 hover:text-accent-dark"
         >
           View all testimonials
           <ChevronRight className="h-4 w-4" aria-hidden />
@@ -82,7 +83,7 @@ export function TestimonialsSection() {
                 </div>
 
                 <blockquote className="line-clamp-3 font-sans text-xs leading-relaxed text-text sm:text-sm">
-                  “{testimonial.content}”
+                  &quot;{testimonial.content}&quot;
                 </blockquote>
               </Card>
             </li>

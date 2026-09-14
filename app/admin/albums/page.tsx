@@ -1,9 +1,7 @@
 import Image from "next/image";
-import Link from "next/link";
-import { Plus } from "lucide-react";
 
+import AdminNav from "@/components/admin/admin-nav";
 import { AlbumActions } from "@/components/admin/album-actions";
-import { Button } from "@/components/ui/button";
 import { listAlbums } from "@/lib/queries/albums";
 
 export default async function AdminAlbumsPage() {
@@ -11,43 +9,42 @@ export default async function AdminAlbumsPage() {
 
   return (
     <main className="container px-4 sm:px-6 lg:px-8">
-      <section className="mb-16 flex flex-col gap-y-4 px-4 pb-12 sm:mb-30 sm:px-0 sm:pb-20 md:border-2 md:border-border">
-        <header className="flex flex-col gap-4 bg-gray-100 px-4 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-6 sm:py-8 md:border-b-2 md:border-border md:px-8">
-          <h1 className="text-lg sm:text-xl">All Albums ({albums.length})</h1>
-          <Button asChild>
-            <Link href="/admin/albums/add">
-              <Plus className="h-4 w-4" aria-hidden />
-              Add New Album
-            </Link>
-          </Button>
-        </header>
+      <header className="flex flex-col items-start justify-between gap-4 px-4 py-6 sm:flex-row sm:items-center sm:gap-0 sm:px-0 sm:py-8 md:py-12">
+        <h1 className="text-2xl sm:text-3xl">Album Management</h1>
+        <AdminNav />
+      </header>
 
-        {albums.length === 0 ? (
-          <p className="px-4 py-12 text-center text-text sm:px-6 md:px-8">
-            No albums yet — create your first one.
-          </p>
-        ) : (
-          <ul className="grid grid-cols-1 gap-4 p-4 sm:gap-6 sm:p-6 md:grid-cols-2 md:p-8">
-            {albums.map((album) => (
-              <li key={album.id} className="md:border-2 md:border-border">
+      <section className="mb-16 flex flex-col gap-y-4 px-4 pb-12 sm:mb-30 sm:px-0 sm:pb-20 md:border-2 md:border-border">
+        <header className="bg-gray-100 px-4 py-6 text-lg sm:px-6 sm:py-8 sm:text-xl md:border-b-2 md:border-border md:px-8">
+          <h2>All Albums</h2>
+        </header>
+        <div className="grid grid-cols-1 gap-4 p-4 sm:gap-6 sm:p-6 md:grid-cols-2 md:p-8">
+          {albums.map((album) => (
+            <article key={album.id} className="md:border-2 md:border-border">
+              <div className="relative overflow-hidden">
                 <Image
                   className="h-64 w-full object-cover"
                   src={album.coverImage}
-                  alt=""
+                  alt={album.title}
                   width={400}
                   height={256}
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
+
                 <div className="space-y-4 p-4 sm:p-6">
-                  <h2 className="text-base font-medium text-foreground sm:text-lg">
-                    {album.title}
-                  </h2>
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1 space-y-2">
+                      <h3 className="text-base font-medium text-foreground sm:text-lg">
+                        {album.title}
+                      </h3>
+                    </div>
+                  </div>
                   <AlbumActions albumId={album.id} />
                 </div>
-              </li>
-            ))}
-          </ul>
-        )}
+              </div>
+            </article>
+          ))}
+        </div>
       </section>
     </main>
   );

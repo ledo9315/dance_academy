@@ -32,7 +32,7 @@ export const site = {
     youtube: "https://www.youtube.com/channel/UCAg0ZZa-6O401hTmuKe9kPA",
   },
   googleReviewsUrl:
-    "https://www.google.com/maps/place/Angela's+Dance+Academy/@26.288230,-81.801987,17z",
+    "https://www.google.com/search?sca_esv=a1754dd2adcb8a92&hl=de&gl=DE&sxsrf=AE3TifOmOt98lQd3pAbr2jPVlT-0PK_yPw:1755100545853&q=Angela%27s+Dance+Academy,+12840+Tamiami+Trl+N+Suite+300,+Naples,+FL+34110,+Vereinigte+Staaten&si=AMgyJEuzsz2NflaaWzrzdpjxXXRaJ2hfdMsbe_mSWso6src8s2T8S0LVkkD6Oiivdbxg09PJiR2B2skEv7CKEjieHl-ZS2xexjUAGSl_kCi5HcD_8bY3BUM%3D&uds=AOm0WdEAA64grrlFWuOz8hk002w9UAlglxXDltbEpvxE4qk52HL8H80nybVtsNfwNczeXkyHTUtGTwjLmFiaiG5wiw0pRVVVMlyXN1FP48kwrR5nYeYey4xJL7hztMglJT3Bmp3LYALPUkMMg0vmXjwn8AJVPRR4KhhkbJg-MTyaogpBbmQJNwLfGQ9JNZYbuLEWXRqg25JnPjS6xGVzu8EEWQMR28g4yg&sa=X&ved=2ahUKEwjHq9KEk4iPAxW2R_EDHQvCGZYQ3PALegQINBAE&biw=1180&bih=928&dpr=2",
   youtubeVideoId: "zKYBXGQuFpA",
   googleMapsEmbedUrl:
     "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3577.1810548002613!2d-81.80198696955127!3d26.288229965617816!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88db1937da84011f%3A0xb520ca78872c755c!2s12840%20Tamiami%20Trail%20N%20Suite%20300%2C%20Naples%2C%20FL%2034110%2C%20USA!5e0!3m2!1sen!2s!4v1683563335525!5m2!1sen!2s",

@@ -49,59 +49,58 @@ export default async function SchedulePage() {
       <section className="mb-12 flex w-full max-w-[800px] flex-col items-center sm:mb-16">
         <SectionHeading
           title="Class Schedule"
-          description="Join us for our weekly dance classes designed for all ages and skill levels. Our professional instructors create a supportive environment where every dancer can thrive."
           className="mb-12 sm:mb-16"
-        />
-
-        {days.length === 0 ? (
-          <p className="font-sans text-text">
-            The schedule is being updated. Please call us at {site.phone.display}.
+          headingClassName="font-light"
+        >
+          <p className="max-w-2xl font-sans text-sm text-text sm:text-base">
+            Join us for our weekly dance classes designed for all ages and skill levels. Our
+            professional instructors create a supportive environment where every dancer can thrive.
           </p>
-        ) : (
-          <div className="w-full space-y-8">
-            {days.map(({ day, entries }) => (
-              <section key={day} className="border border-border">
-                <h3 className="bg-accent-bg border-b border-border px-6 py-4 text-lg font-light text-accent sm:text-xl">
-                  {formatWeekday(day)}
-                </h3>
+        </SectionHeading>
 
-                <ul className="divide-y divide-border">
-                  {entries.map((entry) => (
-                    <li key={entry.id} className="px-6 py-4">
-                      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
-                        <p className="flex items-center gap-3">
-                          <Clock className="h-4 w-4 shrink-0 text-accent" aria-hidden />
-                          <time className="font-sans text-sm sm:text-base">
-                            {formatTimeLabel(entry.startsAt)} – {formatTimeLabel(entry.endsAt)}
-                          </time>
-                        </p>
+        <div className="w-full space-y-8">
+          {days.map(({ day, entries }) => (
+            <section key={day} className="border border-border">
+              <h3 className="bg-accent-bg border-b border-border px-6 py-4 text-lg font-light text-accent sm:text-xl">
+                {formatWeekday(day)}
+              </h3>
 
-                        <p className="flex items-center gap-3">
-                          <Users className="h-4 w-4 shrink-0 text-accent" aria-hidden />
-                          <span className="font-sans text-sm text-text sm:text-base">
-                            {entry.ageGroup}
-                          </span>
-                        </p>
-                      </div>
+              <ul className="divide-y divide-border">
+                {entries.map((entry) => (
+                  <li key={entry.id} className="px-6 py-4">
+                    <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+                      <p className="flex items-center gap-3">
+                        <Clock className="h-4 w-4 shrink-0 text-accent" aria-hidden />
+                        <time className="font-sans text-sm sm:text-base">
+                          {formatTimeLabel(entry.startsAt)} - {formatTimeLabel(entry.endsAt)}
+                        </time>
+                      </p>
 
-                      {entry.className ? (
-                        <p className="mt-2 ml-7 font-sans text-sm text-text">{entry.className}</p>
-                      ) : null}
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            ))}
-          </div>
-        )}
+                      <p className="flex items-center gap-3">
+                        <Users className="h-4 w-4 shrink-0 text-accent" aria-hidden />
+                        <span className="font-sans text-sm text-text sm:text-base">
+                          {entry.ageGroup}
+                        </span>
+                      </p>
+                    </div>
+
+                    {entry.className ? (
+                      <p className="mt-2 ml-7 font-sans text-sm text-text">{entry.className}</p>
+                    ) : null}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
+        </div>
 
         <aside className="mt-12 text-center sm:mt-16">
           <div className="bg-accent-bg mx-auto max-w-md border border-border px-6 py-4">
             <h3 className="mb-2 text-lg font-light">Registration Information</h3>
             <p className="font-sans text-sm text-text">
               To register for classes or for more information, please contact us at{" "}
-              <a href={`mailto:${site.email}`} className="text-accent underline">
-                {site.email}
+              <a href="mailto:info@angelasdanceacademy.com" className="text-accent underline">
+                info@angelasdanceacademy.com
               </a>{" "}
               or call us at{" "}
               <a href={`tel:${site.phone.e164}`} className="text-accent underline">
