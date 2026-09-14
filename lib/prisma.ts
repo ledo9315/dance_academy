@@ -2,12 +2,13 @@ import "server-only";
 
 import { PrismaPg } from "@prisma/adapter-pg";
 
+import { withVerifiedTls } from "@/lib/database-url";
 import { PrismaClient } from "@/lib/generated/prisma/client";
 import { env } from "@/lib/env";
 
 const createPrismaClient = () =>
   new PrismaClient({
-    adapter: new PrismaPg({ connectionString: env.DATABASE_URL }),
+    adapter: new PrismaPg({ connectionString: withVerifiedTls(env.DATABASE_URL) }),
     log: env.NODE_ENV === "development" ? ["warn", "error"] : ["error"],
   });
 

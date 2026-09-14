@@ -1,8 +1,10 @@
 import { PrismaClient, Weekday } from "../lib/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 
+import { withVerifiedTls } from "../lib/database-url";
+
 const prisma = new PrismaClient({
-  adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL }),
+  adapter: new PrismaPg({ connectionString: withVerifiedTls(process.env.DATABASE_URL ?? "") }),
 });
 
 /** Class slots the studio runs by default. Times are minutes since midnight. */

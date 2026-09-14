@@ -12,6 +12,8 @@ import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { PrismaPg } from "@prisma/adapter-pg";
 
+import { withVerifiedTls } from "../lib/database-url";
+
 import { PrismaClient } from "../lib/generated/prisma/client";
 
 const [name, email, password] = process.argv.slice(2);
@@ -27,7 +29,7 @@ if (password.length < 12) {
 }
 
 const prisma = new PrismaClient({
-  adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL }),
+  adapter: new PrismaPg({ connectionString: withVerifiedTls(process.env.DATABASE_URL ?? "") }),
 });
 
 const auth = betterAuth({
