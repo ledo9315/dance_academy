@@ -59,11 +59,17 @@ export function TestimonialsSection() {
         </a>
       </div>
 
-      <div className="relative w-full overflow-hidden">
-        <ul className="animate-scroll flex gap-4">
+      {/* The vertical padding gives the card shadows room inside the clipped
+          track; the matching negative margin keeps the section spacing. */}
+      <div className="relative -my-4 w-full overflow-hidden py-4">
+        <ul className="animate-scroll flex items-stretch gap-4">
           {marquee.map((testimonial, index) => (
-            <li key={`${testimonial.id}-${index}`} aria-hidden={index >= TESTIMONIALS.length}>
-              <Card className="w-80 shrink-0 rounded-lg border border-border bg-white p-4 shadow-sm transition-shadow duration-200 hover:shadow-md sm:p-6">
+            <li
+              key={`${testimonial.id}-${index}`}
+              className="w-80 shrink-0"
+              aria-hidden={index >= TESTIMONIALS.length}
+            >
+              <Card className="h-full rounded-lg border border-border bg-white p-4 shadow-sm transition-shadow duration-200 hover:shadow-md sm:p-6">
                 <div className="mb-4 flex items-start gap-3">
                   <Avatar className="h-10 w-10 shrink-0">
                     <AvatarImage src={testimonial.avatar} alt="" />
