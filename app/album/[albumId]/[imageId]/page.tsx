@@ -3,8 +3,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 
 import { Breadcrumbs } from "@/components/breadcrumbs";
-import { getAlbum } from "@/lib/queries/albums";
-import { prisma } from "@/lib/prisma";
+import { getAlbum, getPhoto } from "@/lib/queries/albums";
 
 type PhotoPageProps = {
   params: Promise<{ albumId: string; imageId: string }>;
@@ -20,10 +19,7 @@ async function loadPhoto(albumId: string, imageId: string) {
 
   const [album, photo] = await Promise.all([
     getAlbum(albumIdNumber),
-    prisma.photo.findFirst({
-      where: { id: photoId, albumId: albumIdNumber },
-      select: { id: true, filename: true, url: true },
-    }),
+    getPhoto(albumIdNumber, photoId),
   ]);
 
   if (!album || !photo) {

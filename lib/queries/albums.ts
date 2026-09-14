@@ -1,5 +1,7 @@
 import "server-only";
 
+import { cache } from "react";
+
 import { prisma } from "@/lib/prisma";
 
 export function listAlbums() {
@@ -9,15 +11,16 @@ export function listAlbums() {
   });
 }
 
-export function getAlbum(albumId: number) {
-  return prisma.album.findUnique({
+/** Cached per request so `generateMetadata` and the page share one query. */
+export const getAlbum = cache((albumId: number) =>
+  prisma.album.findUnique({
     where: { id: albumId },
     select: { id: true, title: true, coverImage: true },
-  });
-}
+  }),
+);
 
-export function getAlbumWithPhotos(albumId: number) {
-  return prisma.album.findUnique({
+export const getAlbumWithPhotos = cache((albumId: number) =>
+  prisma.album.findUnique({
     where: { id: albumId },
     select: {
       id: true,
@@ -28,8 +31,15 @@ export function getAlbumWithPhotos(albumId: number) {
         select: { id: true, filename: true, url: true },
       },
     },
-  });
-}
+  }),
+);
+
+export const getPhoto = cache((albumId: number, photoId: number) =>
+  prisma.photo.findFirst({
+    where: { id: photoId, albumId },
+    select: { id: true, filename: true, url: true },
+  }),
+);
 
 export function listPhotos(albumId: number) {
   return prisma.photo.findMany({
