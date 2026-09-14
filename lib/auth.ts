@@ -9,10 +9,14 @@ import { env } from "@/lib/env";
 import { prisma } from "@/lib/prisma";
 import { site } from "@/lib/site";
 
+const baseURL = env.BETTER_AUTH_URL ?? site.url;
+
 export const auth = betterAuth({
   secret: env.BETTER_AUTH_SECRET,
-  baseURL: env.BETTER_AUTH_URL ?? site.url,
-  trustedOrigins: [env.BETTER_AUTH_URL ?? site.url],
+  baseURL,
+  // BETTER_AUTH_URL points at the live domain in every environment, so local
+  // development needs its own origin on the allow list to sign in.
+  trustedOrigins: env.NODE_ENV === "production" ? [baseURL] : [baseURL, "http://localhost:3000"],
   database: prismaAdapter(prisma, { provider: "postgresql" }),
   emailAndPassword: {
     enabled: true,
