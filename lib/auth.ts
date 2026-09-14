@@ -11,8 +11,8 @@ import { site } from "@/lib/site";
 
 export const auth = betterAuth({
   secret: env.BETTER_AUTH_SECRET,
-  baseURL: site.url,
-  trustedOrigins: [site.url],
+  baseURL: env.BETTER_AUTH_URL ?? site.url,
+  trustedOrigins: [env.BETTER_AUTH_URL ?? site.url],
   database: prismaAdapter(prisma, { provider: "postgresql" }),
   emailAndPassword: {
     enabled: true,

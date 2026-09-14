@@ -6,7 +6,7 @@
 export const site = {
   name: "Angela's Dance Academy",
   shortName: "Angela's Dance Academy",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://angelasdanceacademy.com",
+  url: process.env.NEXT_PUBLIC_BASE_URL ?? "https://angelasdanceacademy.com",
   description:
     "Angela's Dance Academy in Naples, FL offers dance classes & studio programs for kids & teens 3–18 in ballet, jazz, hip-hop & more.",
   email: "angelasdanceacademy@gmail.com",
