@@ -17,6 +17,8 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  // A self-contained server bundle for the Docker image (see Dockerfile).
+  output: "standalone",
   reactStrictMode: true,
   poweredByHeader: false,
   images: {

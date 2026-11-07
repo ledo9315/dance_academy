@@ -1,0 +1,23 @@
+# Lives on the host at /opt/dance-academy/docker-compose.yml.
+#
+# Caddy on the host terminates TLS and proxies to the loopback port below; the container
+# is never reachable from outside. Port 3000 belongs to daily-coding.
+services:
+  app:
+    image: dance-academy:local
+    container_name: dance-academy-app
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "127.0.0.1:3001:3000"
+    mem_limit: 768m
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:3000/robots.txt').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s

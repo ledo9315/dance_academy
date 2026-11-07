@@ -1,0 +1,17 @@
+# Append to /etc/caddy/Caddyfile on the host.
+angelasdanceacademy.com {
+	encode zstd gzip
+
+	# Content-hashed file names, safe to cache for a year.
+	@immutable path /_next/static/*
+	header @immutable Cache-Control "public, max-age=31536000, immutable"
+
+	reverse_proxy 127.0.0.1:3001 {
+		header_up X-Forwarded-For {remote_host}
+		header_up X-Forwarded-Proto {scheme}
+	}
+}
+
+www.angelasdanceacademy.com {
+	redir https://angelasdanceacademy.com{uri} permanent
+}
